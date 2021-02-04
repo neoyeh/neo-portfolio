@@ -1,5 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
+
 
 module.exports = {
   
@@ -76,5 +78,12 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'css/index.css',
     }),
+    new BrowserSyncPlugin({
+      host: 'localhost',
+      port: 8889,
+      proxy: 'http://localhost:8888/'
+    },{
+      reload: false
+    })
   ],
 };
