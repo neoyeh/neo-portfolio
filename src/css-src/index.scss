@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display&display=swap');
 .main {
     color: #f00;
     font-size: 18px;
@@ -93,8 +94,9 @@
 @import 'lib/variables';
 @import 'lib/font-awesome/scss/font-awesome';
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display&display=swap');
 body{
-  font-family: 'Noto Sans TC', sans-serif;
+  font-family: 'Big Shoulders Display', 'Noto Sans TC', sans-serif;
   color:#fff;
 }
 
@@ -177,6 +179,21 @@ body{
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    position: relative;
+    padding-left: 45px;
+    .protfolio-year{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 45px;
+      display: flex;
+      align-items: center;
+      writing-mode: vertical-lr;
+      text-orientation: upright;
+      font-size: 24px;
+      letter-spacing: 2;
+      padding-top: 12px;
+    }
     .protfolio-card{
       display: flex;
       position: relative;

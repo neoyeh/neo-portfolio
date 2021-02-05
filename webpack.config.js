@@ -82,8 +82,6 @@ module.exports = {
       host: 'localhost',
       port: 8889,
       proxy: 'http://localhost:8888/'
-    },{
-      reload: false
     })
   ],
 };
