@@ -229,12 +229,10 @@ body{
         text-outline: 0;
         left: 0;
         z-index: 6;
-        width: 100%;
-        writing-mode: initial;
-        text-orientation: initial;
         padding-top: 40px;
         padding-bottom: 20px;
         background-color: $color-bg;
+        background: linear-gradient(165deg, #0f221d 0%, #0f221d 35%, rgba(0,0,0,0) 85%);
       }
       &.done{
         opacity: 1;
@@ -253,7 +251,7 @@ body{
       @media screen and (max-width: ($mobile-max-width)) {
         max-width: 100%;
         width: 100%;
-        margin-right: 15px;
+        margin-right: 65px;
         margin-bottom: 15px;
       }
       &:last-child{
