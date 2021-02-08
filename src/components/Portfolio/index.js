@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
 const showFunc = () => {
-    [...document.querySelectorAll('.protfolio-card')].map((e,i)=>{
+    [...document.querySelectorAll('.protfolio-card')].map((e, i)=>{
         const time = 1200/document.querySelectorAll('.protfolio-card').length;
         if(e){
             setTimeout(() => {
                 e.classList.add('done');
             }, 500+time*i);
+        }
+    });
+    Array.from(document.querySelectorAll('.protfolio-year')).forEach((e, i)=>{
+        if(e){
+            setTimeout(() => {
+                e.classList.add('done');
+            }, 500*i);
         }
     });
 }
@@ -26,6 +33,7 @@ const imageLoaded = (list) => {
             showFunc();
         }else{
             console.log('some images failed to load, all finished loading');
+            showFunc();
         }
     });
 }
@@ -77,6 +85,65 @@ const Portfolio = () => {
         },
         {
             years : '2020',
+            protfolio_list : [
+                {
+                    name:'HTC desire 20plus',
+                    image:'https://www.htc.com/media/filer_public/htc/shared/homepage/zh-tw/2020/sirocco/20201006_sirocco_homebanner_mobile.jpg',
+                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
+                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
+                },
+                {
+                    name:'bayamo',
+                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
+                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                },
+                {
+                    name:'bayamo',
+                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
+                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                },
+                {
+                    name:'bayamo',
+                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
+                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                },
+                {
+                    name:'bayamo',
+                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
+                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                },
+                {
+                    name:'bayamo',
+                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
+                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                },
+                {
+                    name:'bayamo',
+                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
+                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                },
+                {
+                    name:'bayamo',
+                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
+                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                },
+                {
+                    name:'bayamo',
+                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
+                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                }
+            ]
+        },
+        {
+            years : '2019',
             protfolio_list : [
                 {
                     name:'HTC desire 20plus',
