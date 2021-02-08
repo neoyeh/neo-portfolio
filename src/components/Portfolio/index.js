@@ -19,7 +19,7 @@ const showFunc = () => {
 }
 
 const imageLoaded = (list) => {
-    // showFunc();
+    showFunc();
     Promise.all(Array.from(document.images).map(img => {
         if (img.complete)
             return Promise.resolve(img.naturalHeight !== 0);
