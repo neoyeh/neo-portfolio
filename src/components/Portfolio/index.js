@@ -19,7 +19,7 @@ const showFunc = () => {
 }
 
 const imageLoaded = (list) => {
-    showFunc();
+    // showFunc();
     Promise.all(Array.from(document.images).map(img => {
         if (img.complete)
             return Promise.resolve(img.naturalHeight !== 0);
@@ -146,58 +146,40 @@ const Portfolio = () => {
             years : '2019',
             protfolio_list : [
                 {
-                    name:'HTC desire 20plus',
-                    image:'https://www.htc.com/media/filer_public/htc/shared/homepage/zh-tw/2020/sirocco/20201006_sirocco_homebanner_mobile.jpg',
+                    name:'Vvive-cosmos-2019',
+                    image:'/img/2019-pdp-cosmos-2019.jpg',
                     link_live:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
                     link_github:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
                 },
                 {
-                    name:'bayamo',
-                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
-                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
-                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                    name:'htc-desire19s',
+                    image:'/img/2019-pdp-desire19s.jpg',
+                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
+                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
                 },
                 {
-                    name:'bayamo',
-                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
-                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
-                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                    name:'vive-vrs',
+                    image:'/img/2019-pdp-vive-vrs.jpg',
+                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
+                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
                 },
                 {
-                    name:'bayamo',
-                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
-                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
-                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                    name:'htc-wildfire-e',
+                    image:'/img/2019-pdp-wildfire-e.jpg',
+                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
+                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
                 },
                 {
-                    name:'bayamo',
-                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
-                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
-                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                    name:'htc-wildfire-e1',
+                    image:'/img/2019-pdp-wildfire-e1.jpg',
+                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
+                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
                 },
                 {
-                    name:'bayamo',
-                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
-                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
-                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
-                },
-                {
-                    name:'bayamo',
-                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
-                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
-                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
-                },
-                {
-                    name:'bayamo',
-                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
-                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
-                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
-                },
-                {
-                    name:'bayamo',
-                    image:'https://www.htc.com/media/filer_public/htc/fed-assets/phone2020/img/bayamo-pdp-kv-m.jpg',
-                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
-                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
+                    name:'htc-wildfire-op75',
+                    image:'/img/2019-pdp-wildfire-op75.jpg',
+                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
+                    link_github:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
                 }
             ]
         }
