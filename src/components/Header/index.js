@@ -21,8 +21,10 @@ import ComponentCard from '../ComponentCard';
 import ComponentRouterMatch from '../Content';
 {/* React Testing Library */}
 import ComponentTesting from '../Counter';
-{/* React Testing Library */}
+
+{/* React Portfolio */}
 import Portfolio from '../Portfolio';
+import About from '../About';
 
 
 
@@ -43,7 +45,7 @@ const Header = () => (
                 <li><Link to={`/componentTesting`}>ComponentTesting</Link></li> */}
 
                 <li>
-                    <NavLink activeClassName="active" to="/ComponentUseState">
+                    <NavLink activeClassName="active" to="/about">
                         <i className="fa fa-user-o" aria-hidden="true"></i>
                         <span>首頁</span>    
                     </NavLink>
@@ -74,6 +76,8 @@ const Header = () => (
                 <Route path="/componentCard" component={ComponentCard} />
                 <Route path="/componentRouterMatch/:taskName" component={ComponentRouterMatch} />
                 <Route path="/componentTesting" component={ComponentTesting} />
+
+                <Route path="/about" component={About} />
                 <Route path="/portfolio" component={Portfolio} />
             </Switch>
         </div>
