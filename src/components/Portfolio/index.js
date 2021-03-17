@@ -45,24 +45,15 @@ const Portfolio = () => {
             years : '2021',
             protfolio_list : [
                 {
-                    name:'HTC Desire 20 Plus',
+                    name:'test',
                     text:"品牌手機切版</br>Scrollmagic | Responsive Web Design",
-                    image:'https://www.htc.com/media/filer_public/htc/shared/homepage/zh-tw/2020/sirocco/20201006_sirocco_homebanner_mobile.jpg',
-                    link_live:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
-                    link_github:'#',
+                    image:'https://fakeimg.pl/700x345/',
                 }
             ]
         },
         {
             years : '2020',
             protfolio_list : [
-                {
-                    name:'Suger PAPA',
-                    image:'./img/2020-sugerpapa.jpg',
-                    text:"交友網站切版</br>Bootstrap4 | Responsive Web Design",
-                    link_live:'https://www.asugarpapa.com/',
-                    link_github:'#',
-                },
                 {
                     name:'VIVE Landing Page',
                     image:'./img/2020-home-page-revamp.jpg',
@@ -74,7 +65,6 @@ const Portfolio = () => {
                     name:'Aorus',
                     image:'./img/2020-pdp-aorus.jpg',
                     text:"活動頁面切版(已下架)</br>Responsive Web Design",
-                    link_live:'#',
                     link_github:'#',
                 },
                 {
@@ -102,9 +92,15 @@ const Portfolio = () => {
                     name:'VIVE BlackFriday 2020',
                     image:'./img/2020-promotion-bf-20.jpg',
                     text:"品牌活動頁面切版(已下架)</br>Responsive Web Design",
-                    link_live:'#',
                     link_github:'#',
-                }
+                },
+                {
+                    name:'Suger PAPA',
+                    image:'./img/2020-sugerpapa.jpg',
+                    text:"交友網站切版</br>Bootstrap4 | Responsive Web Design",
+                    link_live:'https://www.asugarpapa.com/',
+                    link_github:'#',
+                },
             ]
         },
         {
@@ -160,33 +156,33 @@ const Portfolio = () => {
                 {
                     name:'富宇地產',
                     text:"富宇地產品牌網站切版串接</br>Bootstrap4 | Responsive Web Design",
-                    image:'./img/2019-pdp-cosmos-2019.jpg',
+                    image:'./img/2018-fuyu-property.jpg',
                     link_live:'http://www.fuyu-property.com.tw/',
                     link_github:'#',
                 },
                 {
                     name:'富宇建設',
                     text:"富宇建設品牌網站切版串接</br>Bootstrap4 | Responsive Web Design",
-                    image:'./img/2019-pdp-cosmos-2019.jpg',
+                    image:'./img/2018-fuyu-langing.jpg',
                     link_live:'http://www.fu-yu.com/',
                     link_github:'#',
                 },
                 {
                     name:'Shopping99 Mobile',
                     text:"電商平台網站切版(平台已改版)</br>Bootstrap4 | Adaptive Web Design",
-                    image:'./img/2019-pdp-cosmos-2019.jpg',
+                    image:'./img/2018-shopping99-mobile.jpg',
                     link_github:'http://www.onepiece8088.acsite.org/neooo/work/shopping99/',
                 },
                 {
                     name:'Shopping99 Desktop',
                     text:"電商平台網站切版(平台已改版)</br>Bootstrap4 | Adaptive Web Design",
-                    image:'./img/2019-pdp-cosmos-2019.jpg',
+                    image:'./img/2018-shopping99-desktop.jpg',
                     link_github:'http://www.onepiece8088.acsite.org/neooo/work/shopping99-web/',
                 },
                 {
                     name:'VASELINE',
                     text:"凡士林品牌官網(網頁已下架)</br>Bootstrap4 | Responsive Web Design",
-                    image:'./img/2019-pdp-cosmos-2019.jpg',
+                    image:'./img/2018-vaseline.jpg',
                     link_github:'http://www.onepiece8088.acsite.org/neooo/work/vaseline/',
                 },
             ]
@@ -197,7 +193,7 @@ const Portfolio = () => {
                 {
                     name:'178人力銀行 Landing Page',
                     text:"178人力銀行官網首頁(網頁已改版)</br>Bootstrap4 | Responsive Web Design",
-                    image:'./img/2019-pdp-cosmos-2019.jpg',
+                    image:'./img/2017-178.jpg',
                     link_github:'http://www.onepiece8088.acsite.org/neooo/work/job178/',
                 }
             ]
@@ -208,8 +204,8 @@ const Portfolio = () => {
                 {
                     name:'部落格 Template',
                     text:"公司內部部落格Template</br>Bootstrap3 | Responsive Web Design",
-                    image:'./img/2019-pdp-cosmos-2019.jpg',
-                    link_github:'http://www.onepiece8088.acsite.org/neooo/blog/blog1/index.html/',
+                    image:'./img/2016-blog1.jpg',
+                    link_github:'http://www.onepiece8088.acsite.org/neooo/blog/blog1/',
                 }
             ]
         }
