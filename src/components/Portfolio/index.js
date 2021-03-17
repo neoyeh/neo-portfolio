@@ -48,6 +48,20 @@ const Portfolio = () => {
                     name:'test',
                     text:"品牌手機切版</br>Scrollmagic | Responsive Web Design",
                     image:'https://fakeimg.pl/700x345/',
+                },
+                {
+                    name:'VIVE Tracker 3.0',
+                    image:'./img/2021-pdp-tracker3.jpg',
+                    text:"品牌產品頁面切版</br>Scrollmagic | Responsive Web Design",
+                    link_live:'https://www.vive.com/us/accessory/tracker3/',
+                    link_github:'#',
+                },
+                {
+                    name:'Facial Tracker',
+                    image:'./img/2021-pdp-facial-tracker.jpg',
+                    text:"品牌產品頁面切版</br>Responsive Web Design",
+                    link_live:'https://www.vive.com/us/accessory/facial-tracker/',
+                    link_github:'#',
                 }
             ]
         },
