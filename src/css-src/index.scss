@@ -101,8 +101,11 @@
 body{
   font-family: 'Noto Sans TC','Roboto', 'sans-serif';
   color:#fff;
+  a{
+    text-decoration: none;
+  }
 }
-
+  
 
 .nav-bar{
   height: 100%;
@@ -318,44 +321,47 @@ body{
                 }
               }
             }
-            .link-block{
-              display: flex;
-              flex-direction: column;
-              z-index: 2;
+            .wording-area{
               width: 100%;
-              height: auto;
-              background: #10221e;
-              transition: all 0.2s ease-in;
+              display: flex;
+              flex-wrap: wrap;
+              padding: 20px 15px 50px;
+              align-items: flex-start;
               flex: 1 1 auto;
-              padding: 15px 20px 50px;
-              @media screen and (max-width: ($mobile-max-width)) {
-                transform: translate(0, 0);
-                top: auto;
-                left: auto;
-                bottom: 0;
+              .text-block{
                 width: 100%;
-                height: 60px;
-                align-items: flex-start;
-                padding-left: 85px;
-                justify-content: flex-end;
-                padding-bottom: 10px;
-                opacity: 1;
-                visibility: visible;
-                background-color: rgba(16,34,30,0.2);
-                -webkit-backdrop-filter: blur(5px);
-                backdrop-filter: blur(5px);
+                .font-card-title{
+                  color: $color-white;
+                }
+                .font-card-text{
+                  color: #9e9e9e;
+                }
               }
-              .name{
-                color: $color-white;
-                flex-basis: 0 0 auto;
-                line-height: 1.5;
-              }
-              a{
-                text-decoration: none;
-                color: $color-white;
-                flex-basis: 0 0 auto;
+              .link-block{
+                width: 100%;
+                display: flex;
+                flex-wrap: nowrap;
+                width: 100%;
+                padding-top: 15px;
+                .font-card-icon{
+                  display: flex;
+                  align-items: flex-end;
+                  margin-right: 12px;
+                  color: #9e9e9e;
+                  transition: color 0.25s;
+                  &:hover{
+                    color: #fff;
+                  }
+                  &.font-card-icon--live{
+                    font-size: 25px;
+                  }
+                  &.font-card-icon--github{
+                    font-size: 31px;
+                  }
+                }
               }
             }
+            
           }
         }
         &:hover{
