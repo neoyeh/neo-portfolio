@@ -169,18 +169,16 @@ const Portfolio = () => {
             years : '2018',
             protfolio_list : [
                 {
-                    name:'富宇地產',
-                    text:"富宇地產品牌網站切版串接</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
-                    image:'./img/2018-fuyu-property.jpg',
-                    link_live:'http://www.fuyu-property.com.tw/',
-                    link_github:'https://neoyeh.github.io/neo_yeh/wip/fuyu_estate/',
+                    name:'Dlsite 台灣 活動頁',
+                    text:"成人遊戲小說活動頁(網頁已下架)</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
+                    image:'./img/2018-dlsite.jpg',
+                    link_github:'http://www.onepiece8088.acsite.org/neooo/work/dlsite/',
                 },
                 {
-                    name:'富宇建設',
-                    text:"富宇建設品牌網站切版串接</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
-                    image:'./img/2018-fuyu-langing.jpg',
-                    link_live:'http://www.fu-yu.com/',
-                    link_github:'#',
+                    name:'178人力銀行 Landing Page',
+                    text:"178人力銀行官網首頁(網頁已改版)</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
+                    image:'./img/2018-178.jpg',
+                    link_github:'http://www.onepiece8088.acsite.org/neooo/work/job178/',
                 },
                 {
                     name:'Shopping99 Mobile',
@@ -206,10 +204,18 @@ const Portfolio = () => {
             years : '2017',
             protfolio_list : [
                 {
-                    name:'178人力銀行 Landing Page',
-                    text:"178人力銀行官網首頁(網頁已改版)</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
-                    image:'./img/2017-178.jpg',
-                    link_github:'http://www.onepiece8088.acsite.org/neooo/work/job178/',
+                    name:'富宇地產',
+                    text:"富宇地產品牌網站切版串接</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
+                    image:'./img/2017-fuyu-property.jpg',
+                    link_live:'http://www.fuyu-property.com.tw/',
+                    link_github:'https://neoyeh.github.io/neo_yeh/wip/fuyu_estate/',
+                },
+                {
+                    name:'富宇建設',
+                    text:"富宇建設品牌網站切版串接</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
+                    image:'./img/2017-fuyu-langing.jpg',
+                    link_live:'http://www.fu-yu.com/',
+                    link_github:'#',
                 }
             ]
         },
