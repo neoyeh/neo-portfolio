@@ -45,21 +45,22 @@ const Portfolio = () => {
             years : '2021',
             protfolio_list : [
                 {
-                    name:'test',
-                    text:"品牌手機切版</br>Scrollmagic | Responsive Web Design",
+                    name:'My Portfolio',
+                    text:"個人作品集切版</br>Independent Work</br>React hook | Responsive Web Design",
                     image:'https://fakeimg.pl/700x345/',
+                    link_github:'https://neoyeh.github.io/neo-portfolio/dist/#/about/',
                 },
                 {
                     name:'VIVE Tracker 3.0',
                     image:'./img/2021-pdp-tracker3.jpg',
-                    text:"品牌產品頁面切版</br>Scrollmagic | Responsive Web Design",
+                    text:"品牌產品頁面切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
                     link_live:'https://www.vive.com/us/accessory/tracker3/',
                     link_github:'#',
                 },
                 {
                     name:'Facial Tracker',
                     image:'./img/2021-pdp-facial-tracker.jpg',
-                    text:"品牌產品頁面切版</br>Responsive Web Design",
+                    text:"品牌產品頁面切版</br>Independent Work</br>Responsive Web Design",
                     link_live:'https://www.vive.com/us/accessory/facial-tracker/',
                     link_github:'#',
                 }
@@ -71,47 +72,47 @@ const Portfolio = () => {
                 {
                     name:'VIVE Landing Page',
                     image:'./img/2020-home-page-revamp.jpg',
-                    text:"品牌首頁切版</br>Responsive Web Design",
+                    text:"品牌首頁切版</br>Team Work</br>Responsive Web Design",
                     link_live:'https://www.vive.com/tw/',
                     link_github:'#',
                 },
                 {
                     name:'Aorus',
                     image:'./img/2020-pdp-aorus.jpg',
-                    text:"活動頁面切版(已下架)</br>Responsive Web Design",
+                    text:"活動頁面切版(已下架)</br>Independent Work</br>Responsive Web Design",
                     link_github:'#',
                 },
                 {
                     name:'HTC Desire 20 Pro',
                     image:'./img/2020-pdp-desire20pro.jpg',
-                    text:"品牌手機切版</br>Scrollmagic | Responsive Web Design",
+                    text:"品牌手機切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
                     link_live:'https://www.htc.com/tw/smartphones/htc-desire-20-pro/',
                     link_github:'#',
                 },
                 {
                     name:'HTC Desire 20 Plus',
                     image:'./img/2020-pdp-sirocco.jpg',
-                    text:"品牌手機切版</br>Scrollmagic | Responsive Web Design",
+                    text:"品牌手機切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
                     link_live:'https://www.htc.com/tw/smartphones/htc-desire-20-plus/',
                     link_github:'#',
                 },
                 {
                     name:'HTC U20 5G',
                     image:'./img/2020-pdp-u20-5g.jpg',
-                    text:"品牌手機切版</br>Scrollmagic | Responsive Web Design",
+                    text:"品牌手機切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
                     link_live:'https://www.htc.com/tw/smartphones/htc-u20-5g/',
                     link_github:'#',
                 },
                 {
                     name:'VIVE BlackFriday 2020',
                     image:'./img/2020-promotion-bf-20.jpg',
-                    text:"品牌活動頁面切版(已下架)</br>Responsive Web Design",
+                    text:"品牌活動頁面切版(已下架)</br>Independent Work</br>Responsive Web Design",
                     link_github:'#',
                 },
                 {
                     name:'Suger PAPA',
                     image:'./img/2020-sugerpapa.jpg',
-                    text:"交友網站切版</br>Bootstrap4 | Responsive Web Design",
+                    text:"交友網站切版</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
                     link_live:'https://www.asugarpapa.com/',
                     link_github:'#',
                 },
@@ -123,42 +124,42 @@ const Portfolio = () => {
                 {
                     name:'VIVE COSMOS',
                     image:'./img/2019-pdp-cosmos-2019.jpg',
-                    text:"產品介紹頁切版</br>Scrollmagic | Responsive Web Design",
+                    text:"產品介紹頁切版</br>Team Work</br>Scrollmagic | Responsive Web Design",
                     link_live:'https://www.vive.com/us/product/vive-cosmos/features/',
                     link_github:'#',
                 },
                 {
                     name:'HTC Desire 19s',
                     image:'./img/2019-pdp-desire19s.jpg',
-                    text:"品牌手機切版</br>Scrollmagic | Responsive Web Design",
+                    text:"品牌手機切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
                     link_live:'https://www.htc.com/tw/smartphones/htc-desire-19s/',
                     link_github:'#',
                 },
                 {
                     name:'VIVE Reality System 2019',
                     image:'./img/2019-pdp-vive-vrs.jpg',
-                    text:"產品介紹頁切版</br>Responsive Web Design",
+                    text:"產品介紹頁切版</br>Independent Work</br>Responsive Web Design",
                     link_live:'https://www.vive.com/us/vive-reality-system/',
                     link_github:'#',
                 },
                 {
                     name:'HTC Wildfire e',
                     image:'./img/2019-pdp-wildfire-e.jpg',
-                    text:"品牌手機切版</br>Responsive Web Design",
+                    text:"品牌手機切版</br>Independent Work</br>Responsive Web Design",
                     link_live:'https://www.htc.com/af/smartphones/htc-wildfire-e/',
                     link_github:'#',
                 },
                 {
                     name:'HTC Wildfire e1',
                     image:'./img/2019-pdp-wildfire-e1.jpg',
-                    text:"品牌手機切版</br>Responsive Web Design",
+                    text:"品牌手機切版</br>Independent Work</br>Responsive Web Design",
                     link_live:'https://www.htc.com/af/smartphones/htc-wildfire-e1-wildfire-e1-plus/',
                     link_github:'#',
                 },
                 {
                     name:'HTC Wildfire OP75',
                     image:'./img/2019-pdp-wildfire-op75.jpg',
-                    text:"品牌手機切版</br>Responsive Web Design",
+                    text:"品牌手機切版</br>Independent Work</br>Responsive Web Design",
                     link_live:'https://www.htc.com/in/smartphones/htc-wildfire-r70/',
                     link_github:'#',
                 }
@@ -169,33 +170,33 @@ const Portfolio = () => {
             protfolio_list : [
                 {
                     name:'富宇地產',
-                    text:"富宇地產品牌網站切版串接</br>Bootstrap4 | Responsive Web Design",
+                    text:"富宇地產品牌網站切版串接</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
                     image:'./img/2018-fuyu-property.jpg',
                     link_live:'http://www.fuyu-property.com.tw/',
-                    link_github:'#',
+                    link_github:'https://neoyeh.github.io/neo_yeh/wip/fuyu_estate/',
                 },
                 {
                     name:'富宇建設',
-                    text:"富宇建設品牌網站切版串接</br>Bootstrap4 | Responsive Web Design",
+                    text:"富宇建設品牌網站切版串接</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
                     image:'./img/2018-fuyu-langing.jpg',
                     link_live:'http://www.fu-yu.com/',
                     link_github:'#',
                 },
                 {
                     name:'Shopping99 Mobile',
-                    text:"電商平台網站切版(平台已改版)</br>Bootstrap4 | Adaptive Web Design",
+                    text:"電商平台網站切版(平台已改版)</br>Independent Work</br>Bootstrap4 | Adaptive Web Design",
                     image:'./img/2018-shopping99-mobile.jpg',
                     link_github:'http://www.onepiece8088.acsite.org/neooo/work/shopping99/',
                 },
                 {
                     name:'Shopping99 Desktop',
-                    text:"電商平台網站切版(平台已改版)</br>Bootstrap4 | Adaptive Web Design",
+                    text:"電商平台網站切版(平台已改版)</br>Independent Work</br>Bootstrap4 | Adaptive Web Design",
                     image:'./img/2018-shopping99-desktop.jpg',
                     link_github:'http://www.onepiece8088.acsite.org/neooo/work/shopping99-web/',
                 },
                 {
                     name:'VASELINE',
-                    text:"凡士林品牌官網(網頁已下架)</br>Bootstrap4 | Responsive Web Design",
+                    text:"凡士林品牌官網(網頁已下架)</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
                     image:'./img/2018-vaseline.jpg',
                     link_github:'http://www.onepiece8088.acsite.org/neooo/work/vaseline/',
                 },
@@ -206,7 +207,7 @@ const Portfolio = () => {
             protfolio_list : [
                 {
                     name:'178人力銀行 Landing Page',
-                    text:"178人力銀行官網首頁(網頁已改版)</br>Bootstrap4 | Responsive Web Design",
+                    text:"178人力銀行官網首頁(網頁已改版)</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
                     image:'./img/2017-178.jpg',
                     link_github:'http://www.onepiece8088.acsite.org/neooo/work/job178/',
                 }
@@ -217,7 +218,7 @@ const Portfolio = () => {
             protfolio_list : [
                 {
                     name:'部落格 Template',
-                    text:"公司內部部落格Template</br>Bootstrap3 | Responsive Web Design",
+                    text:"公司內部部落格Template</br>Independent Work</br>Bootstrap3 | Responsive Web Design",
                     image:'./img/2016-blog1.jpg',
                     link_github:'http://www.onepiece8088.acsite.org/neooo/blog/blog1/',
                 }
