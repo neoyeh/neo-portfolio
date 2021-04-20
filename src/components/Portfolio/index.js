@@ -233,17 +233,12 @@ const Portfolio = () => {
             ]
         }
     ]);
+    const dispatch = useDispatch();
+    const slist = useSelector(state => state.portfolioReducer);
     
-    // const slist = useSelector(state => state.portfolioReducer);
-    // dispatch(fetchPortfolioBegin());
-    // const useFetching = (someFetchActionCreator) => {
-    //     const dispatch = useDispatch();
-    //     useEffect(() => {
-    //       dispatch(someFetchActionCreator());
-    //     }, [])
-    // }
-    // useFetching(fetchPortfolioBegin);
-    
+    useEffect(() => {
+        dispatch(fetchPortfolioBegin());
+    }, [dispatch]);
 
     useEffect(()=> {
         console.log('render 後執行');
@@ -253,17 +248,17 @@ const Portfolio = () => {
         //放空陣列只會在render後跑一次
     },[]);
     useEffect(()=> {
-        console.log(`state改變成 ${list}`);
+        console.log(`state改變成 ${slist}`);
         console.log(`========`);
-        imageLoaded(list);
+        imageLoaded(slist);
         return () => {
-            console.log(`state改變前 ${list}`);
+            console.log(`state改變前 ${slist}`);
         }
-    },[list]);
+    },[slist]);
     
     return (
-        <div className="protfolio-content" style={{'display':'none'}}>
-            {list.map((list,index)=>{
+        <div className="protfolio-content">
+            {slist.portfolioList.map((list,index)=>{
                 return(
                     <div className="protfolio-list" key={index}>
                         <div className="protfolio-year">{list.years}</div>

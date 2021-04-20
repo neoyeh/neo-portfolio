@@ -4,8 +4,9 @@ const initState = {
 
 const portfolioReducer = (state = initState, action) => {
     switch (action.type) {
-        case action.FETCH_PORTFOLIO_SUCCESS:
+        case 'FETCH_PORTFOLIO_SUCCESS':
             return {
+                ...state,
                 portfolioList: action.payload.data,
             }
         default:
