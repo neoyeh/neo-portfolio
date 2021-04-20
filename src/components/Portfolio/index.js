@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchPortfolioBegin } from '../../action/portfolio';
 
 const showFunc = () => {
     [...document.querySelectorAll('.protfolio-card')].map((e, i)=>{
@@ -46,7 +48,7 @@ const Portfolio = () => {
             protfolio_list : [
                 {
                     name:'My Portfolio',
-                    text:"個人作品集切版</br>Independent Work</br>React hook | Responsive Web Design",
+                    text:"個人作品集</br>Independent Work</br>React hook | Responsive Web Design",
                     image:'https://fakeimg.pl/700x345/',
                     link_github:'https://neoyeh.github.io/neo-portfolio/dist/#/about/',
                 },
@@ -170,31 +172,31 @@ const Portfolio = () => {
             protfolio_list : [
                 {
                     name:'Dlsite 台灣 活動頁',
-                    text:"成人遊戲小說活動頁(網頁已下架)</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
+                    text:"成人遊戲小說活動頁(已下架)</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
                     image:'./img/2018-dlsite.jpg',
                     link_github:'http://www.onepiece8088.acsite.org/neooo/work/dlsite/',
                 },
                 {
                     name:'178人力銀行 Landing Page',
-                    text:"178人力銀行官網首頁(網頁已改版)</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
+                    text:"178人力銀行官網首頁(已改版)</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
                     image:'./img/2018-178.jpg',
                     link_github:'http://www.onepiece8088.acsite.org/neooo/work/job178/',
                 },
                 {
                     name:'Shopping99 Mobile',
-                    text:"電商平台網站切版(平台已改版)</br>Independent Work</br>Bootstrap4 | Adaptive Web Design",
+                    text:"電商平台網站切版(已改版)</br>Independent Work</br>Bootstrap4 | Adaptive Web Design",
                     image:'./img/2018-shopping99-mobile.jpg',
                     link_github:'http://www.onepiece8088.acsite.org/neooo/work/shopping99/',
                 },
                 {
                     name:'Shopping99 Desktop',
-                    text:"電商平台網站切版(平台已改版)</br>Independent Work</br>Bootstrap4 | Adaptive Web Design",
+                    text:"電商平台網站切版(已改版)</br>Independent Work</br>Bootstrap4 | Adaptive Web Design",
                     image:'./img/2018-shopping99-desktop.jpg',
                     link_github:'http://www.onepiece8088.acsite.org/neooo/work/shopping99-web/',
                 },
                 {
                     name:'VASELINE',
-                    text:"凡士林品牌官網(網頁已下架)</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
+                    text:"凡士林品牌官網(已下架)</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
                     image:'./img/2018-vaseline.jpg',
                     link_github:'http://www.onepiece8088.acsite.org/neooo/work/vaseline/',
                 },
@@ -231,6 +233,18 @@ const Portfolio = () => {
             ]
         }
     ]);
+    
+    // const slist = useSelector(state => state.portfolioReducer);
+    // dispatch(fetchPortfolioBegin());
+    // const useFetching = (someFetchActionCreator) => {
+    //     const dispatch = useDispatch();
+    //     useEffect(() => {
+    //       dispatch(someFetchActionCreator());
+    //     }, [])
+    // }
+    // useFetching(fetchPortfolioBegin);
+    
+
     useEffect(()=> {
         console.log('render 後執行');
         return () => {
@@ -248,7 +262,7 @@ const Portfolio = () => {
     },[list]);
     
     return (
-        <div className="protfolio-content">
+        <div className="protfolio-content" style={{'display':'none'}}>
             {list.map((list,index)=>{
                 return(
                     <div className="protfolio-list" key={index}>

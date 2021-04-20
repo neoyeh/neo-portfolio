@@ -7,6 +7,7 @@ import ComponentRedux from './ComponentRedux.jsx';
 
 const Content = () => {
     const dispatch = useDispatch();
+    
     const data = useSelector(state => state.todoReducer);
     return (
         <div>
