@@ -65,6 +65,33 @@ const Portfolio = () => {
         }
     },[list]);
     
+
+
+    const gitlinkbuild = ( data ) => {
+        if(data){
+            if( Array.isArray(data) && data.length > 0 ){
+                console.log('a')
+                return(
+                    data.map((link,index)=>{
+                        return(
+                            <a href={link} key={index} className="font-card-icon font-card-icon--github" target="_blank" rel="nofollow noopener noreferrer">
+                                <i className="fa fa-github" aria-hidden="true"></i>
+                            </a>
+                        )
+                    })
+                );
+            }else{
+                return (
+                    <a href={data} className="font-card-icon font-card-icon--github" target="_blank" rel="nofollow noopener noreferrer">
+                        <i className="fa fa-github" aria-hidden="true"></i>
+                    </a>
+                );
+            };
+        }else{
+            return "";
+        };
+    };
+
     return (
         <div className="protfolio-content">
             {list.portfolioList.map((list,index)=>{
@@ -97,11 +124,7 @@ const Portfolio = () => {
                                                                     <i className="fa fa-desktop" aria-hidden="true"></i>
                                                                 </a>:""
                                                             }
-                                                            {(e.link_github)?
-                                                                <a href={e.link_github} className="font-card-icon font-card-icon--github" target="_blank" rel="nofollow noopener noreferrer">
-                                                                    <i className="fa fa-github" aria-hidden="true"></i>
-                                                                </a>:""
-                                                            }
+                                                            {gitlinkbuild(e.link_github)}
                                                         </div>
                                                         :""
                                                     }

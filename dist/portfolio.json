@@ -13,14 +13,14 @@
         "image": "./img/2021-pdp-tracker3.jpg",
         "text": "品牌產品頁面切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
         "link_live": "https://www.vive.com/us/accessory/tracker3/",
-        "link_github": "#"
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-mini-tracker/default-prototype.htm"
       },
       {
         "name": "Facial Tracker",
         "image": "./img/2021-pdp-facial-tracker.jpg",
         "text": "品牌產品頁面切版</br>Independent Work</br>Responsive Web Design",
         "link_live": "https://www.vive.com/us/accessory/facial-tracker/",
-        "link_github": "#"
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-zip-tracker/default-prototype.htm"
       }
     ]
   },
@@ -32,40 +32,40 @@
         "image": "./img/2020-home-page-revamp.jpg",
         "text": "品牌首頁切版</br>Team Work</br>Responsive Web Design",
         "link_live": "https://www.vive.com/tw/",
-        "link_github": "#"
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/vive-revamp-homepage/default-prototype.htm"
       },
       {
         "name": "Aorus",
         "image": "./img/2020-pdp-aorus.jpg",
         "text": "活動頁面切版(已下架)</br>Independent Work</br>Responsive Web Design",
-        "link_github": "#"
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/vive-aorus/default-prototype.htm"
       },
       {
         "name": "HTC Desire 20 Pro",
         "image": "./img/2020-pdp-desire20pro.jpg",
         "text": "品牌手機切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
         "link_live": "https://www.htc.com/tw/smartphones/htc-desire-20-pro/",
-        "link_github": "#"
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-phone2020/desire20pro-prototype.htm"
       },
       {
         "name": "HTC Desire 20 Plus",
         "image": "./img/2020-pdp-sirocco.jpg",
         "text": "品牌手機切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
         "link_live": "https://www.htc.com/tw/smartphones/htc-desire-20-plus/",
-        "link_github": "#"
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-sirocco/default-prototype.htm"
       },
       {
         "name": "HTC U20 5G",
         "image": "./img/2020-pdp-u20-5g.jpg",
         "text": "品牌手機切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
         "link_live": "https://www.htc.com/tw/smartphones/htc-u20-5g/",
-        "link_github": "#"
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-phone2020/u20-prototype.htm"
       },
       {
         "name": "VIVE BlackFriday 2020",
         "image": "./img/2020-promotion-bf-20.jpg",
         "text": "品牌活動頁面切版(已下架)</br>Independent Work</br>Responsive Web Design",
-        "link_github": "#"
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/promotion-bf-20/default-prototype.htm"
       },
       {
         "name": "Suger PAPA",
@@ -84,42 +84,47 @@
         "image": "./img/2019-pdp-cosmos-2019.jpg",
         "text": "產品介紹頁切版</br>Team Work</br>Scrollmagic | Responsive Web Design",
         "link_live": "https://www.vive.com/us/product/vive-cosmos/features/",
-        "link_github": "#"
+        "link_github": [
+          "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-cosmos-2020/cosmos-overview-prototype.htm",
+          "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-cosmos-2020/elite-feature-prototype.htm",
+          "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-cosmos-2020/play-feature-prototype.htm",
+          "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-cosmos-2020/play-overview-prototype.htm"
+        ]
       },
       {
         "name": "HTC Desire 19s",
         "image": "./img/2019-pdp-desire19s.jpg",
         "text": "品牌手機切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
         "link_live": "https://www.htc.com/tw/smartphones/htc-desire-19s/",
-        "link_github": "#"
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-desire19s/default-prototype.htm"
       },
       {
         "name": "VIVE Reality System 2019",
         "image": "./img/2019-pdp-vive-vrs.jpg",
         "text": "產品介紹頁切版</br>Independent Work</br>Responsive Web Design",
         "link_live": "https://www.vive.com/us/vive-reality-system/",
-        "link_github": "#"
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-vive-vrs/default-prototype.htm"
       },
       {
         "name": "HTC Wildfire e",
         "image": "./img/2019-pdp-wildfire-e.jpg",
         "text": "品牌手機切版</br>Independent Work</br>Responsive Web Design",
         "link_live": "https://www.htc.com/af/smartphones/htc-wildfire-e/",
-        "link_github": "#"
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/wildfire-e/default-prototype.htm"
       },
       {
         "name": "HTC Wildfire e1",
         "image": "./img/2019-pdp-wildfire-e1.jpg",
         "text": "品牌手機切版</br>Independent Work</br>Responsive Web Design",
         "link_live": "https://www.htc.com/af/smartphones/htc-wildfire-e1-wildfire-e1-plus/",
-        "link_github": "#"
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/wildfire-e1/default-prototype.htm"
       },
       {
         "name": "HTC Wildfire OP75",
         "image": "./img/2019-pdp-wildfire-op75.jpg",
         "text": "品牌手機切版</br>Independent Work</br>Responsive Web Design",
         "link_live": "https://www.htc.com/in/smartphones/htc-wildfire-r70/",
-        "link_github": "#"
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/wildfire-op75/default-prototype.htm"
       }
     ]
   },
