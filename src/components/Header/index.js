@@ -44,24 +44,30 @@ const Header = () => (
                 <li><Link to={`/componentRouterMatch/test`}>ComponentRouterMatch</Link></li>
                 <li><Link to={`/componentTesting`}>ComponentTesting</Link></li> */}
 
-                <li>
+                {/* <li>
                     <NavLink activeClassName="active" to="/about">
                         <i className="fa fa-user-o" aria-hidden="true"></i>
                         <span>首頁</span>    
                     </NavLink>
-                </li>          
+                </li>           */}
                 <li>
                     <NavLink activeClassName="active" to={`/portfolio`}>
                         <i className="fa fa-cubes" aria-hidden="true"></i>
                         <span>作品</span>    
                     </NavLink>
-                </li>         
-                <li>
+                </li>          
+                {/* <li>
+                    <NavLink activeClassName="active" to={`/portfolio`}>
+                        <i className="fa fa-cubes" aria-hidden="true"></i>
+                        <span>作品</span>    
+                    </NavLink>
+                </li>           */}
+                {/* <li>
                     <NavLink activeClassName="active" to={`/ComponentUseEffect1`}>
                         <i className="fa fa-envelope-o" aria-hidden="true"></i>
                         <span>聯絡資訊</span>    
                     </NavLink>
-                </li>
+                </li> */}
             </ul>
         </div>
         <div className="page"> 
