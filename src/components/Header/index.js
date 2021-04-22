@@ -78,6 +78,7 @@ const Header = () => (
                 <Route path="/componentTesting" component={ComponentTesting} />
 
                 <Route path="/about" component={About} />
+                <Route path="/" component={Portfolio} />
                 <Route path="/portfolio" component={Portfolio} />
             </Switch>
         </div>
