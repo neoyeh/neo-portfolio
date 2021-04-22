@@ -51,7 +51,7 @@ const Header = () => (
                     </NavLink>
                 </li>           */}
                 <li>
-                    <NavLink activeClassName="active" to={`/portfolio`}>
+                    <NavLink activeClassName="active" to={`/`}>
                         <i className="fa fa-cubes" aria-hidden="true"></i>
                         <span>作品</span>    
                     </NavLink>
