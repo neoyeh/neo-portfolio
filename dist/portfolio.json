@@ -7,7 +7,7 @@
         "name": "My Portfolio",
         "text": "個人作品集</br>Independent Work</br>React hook | Responsive Web Design",
         "image": "https://fakeimg.pl/700x345/",
-        "link_github": "https://neoyeh.github.io/neo-portfolio/dist/#/about/"
+        "link_github": "https://neoyeh.github.io/neo-portfolio/dist/"
       },
       {
         "name": "VIVE Tracker 3.0",
