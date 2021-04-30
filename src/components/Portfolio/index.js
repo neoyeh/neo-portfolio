@@ -70,7 +70,6 @@ const Portfolio = () => {
     const gitlinkbuild = ( data ) => {
         if(data){
             if( Array.isArray(data) && data.length > 0 ){
-                console.log('a')
                 return(
                     data.map((link,index)=>{
                         return(
@@ -100,39 +99,42 @@ const Portfolio = () => {
                         <div className="protfolio-year">{list.years}</div>
                         <div className="protfolio-list-content">
                             {list.protfolio_list.map((e,i)=>{
-                                return(
-                                    <div className={"protfolio-card"} key={i}>
-                                        <div className="protfolio-card-padding">
-                                            <div className="protfolio-card-content">
-                                                <div className="image-block">
-                                                    <img src={e.image} />
-                                                </div>
-                                                <div className="wording-area">
-                                                    <div className="text-block">
-                                                        <div className="font-card-title">{e.name}</div>
-                                                        {(e.text)?
-                                                            <div className="font-card-text"
-                                                                dangerouslySetInnerHTML={{__html: e.text}}
-                                                            >
-                                                            </div>:""
+                                console.log(e.hidden)
+                                if(e.hidden!==true){
+                                    return(
+                                        <div className={"protfolio-card"} key={i}>
+                                            <div className="protfolio-card-padding">
+                                                <div className="protfolio-card-content">
+                                                    <div className="image-block">
+                                                        <img src={e.image} />
+                                                    </div>
+                                                    <div className="wording-area">
+                                                        <div className="text-block">
+                                                            <div className="font-card-title">{e.name}</div>
+                                                            {(e.text)?
+                                                                <div className="font-card-text"
+                                                                    dangerouslySetInnerHTML={{__html: e.text}}
+                                                                >
+                                                                </div>:""
+                                                            }
+                                                        </div>
+                                                        {(e.link_live||e.link_github)?
+                                                            <div className="link-block">
+                                                                {(e.link_live)?
+                                                                    <a href={e.link_live} className="font-card-icon font-card-icon--live" target="_blank" rel="nofollow noopener noreferrer">
+                                                                        <i className="fa fa-desktop" aria-hidden="true"></i>
+                                                                    </a>:""
+                                                                }
+                                                                {gitlinkbuild(e.link_github)}
+                                                            </div>
+                                                            :""
                                                         }
                                                     </div>
-                                                    {(e.link_live||e.link_github)?
-                                                        <div className="link-block">
-                                                            {(e.link_live)?
-                                                                <a href={e.link_live} className="font-card-icon font-card-icon--live" target="_blank" rel="nofollow noopener noreferrer">
-                                                                    <i className="fa fa-desktop" aria-hidden="true"></i>
-                                                                </a>:""
-                                                            }
-                                                            {gitlinkbuild(e.link_github)}
-                                                        </div>
-                                                        :""
-                                                    }
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                )
+                                    )
+                                }
                             })}
                         </div>
                     </div>
