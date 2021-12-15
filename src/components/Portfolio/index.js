@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPortfolioBegin } from '../../action/portfolio';
+import PropTypes from 'prop-types';
 
 const showFunc = () => {
     [...document.querySelectorAll('.protfolio-card')].map((e, i)=>{
@@ -40,33 +41,13 @@ const imageLoaded = (list) => {
 }
 
 
-
-const Portfolio = () => {
-    const dispatch = useDispatch();
-    const list = useSelector(state => state.portfolioReducer);
-    
-    useEffect(() => {
-        dispatch(fetchPortfolioBegin());
-    }, []);
-
-    useEffect(()=> {
-        console.log('render 後執行');
-        return () => {
-            console.log(`render 移除後`);
-        }
-        //放空陣列只會在render後跑一次
-    },[]);
-    useEffect(()=> {
-        console.log(`state改變成 ${list}`);
-        console.log(`========`);
-        imageLoaded(list);
-        return () => {
-            console.log(`state改變前 ${list}`);
-        }
-    },[list]);
-    
-
-
+const PortfolioCard = ({item}) => {
+    const {
+        image,
+        text,
+        link_live,
+        link_github
+    } = item;
     const gitlinkbuild = ( data ) => {
         if(data){
             if( Array.isArray(data) && data.length > 0 ){
@@ -92,6 +73,85 @@ const Portfolio = () => {
     };
 
     return (
+        <div className={"protfolio-card"}>
+            <div className="protfolio-card-padding">
+                <div className="protfolio-card-content">
+                    <div className="image-block">
+                        <img src={image} />
+                    </div>
+                    <div className="wording-area">
+                        <div className="text-block">
+                            <div className="font-card-title">{name}</div>
+                            {(text)?
+                                <div className="font-card-text"
+                                    dangerouslySetInnerHTML={{__html: text}}
+                                >
+                                </div>:""
+                            }
+                        </div>
+                        {(link_live||link_github)?
+                            <div className="link-block">
+                                {(link_live)?
+                                    <a href={link_live} className="font-card-icon font-card-icon--live" target="_blank" rel="nofollow noopener noreferrer">
+                                        <i className="fa fa-desktop" aria-hidden="true"></i>
+                                    </a>:""
+                                }
+                                {gitlinkbuild(link_github)}
+                            </div>
+                            :""
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+PortfolioCard.propTypes = {
+    item: PropTypes.shape({
+        image: PropTypes.string,
+        text: PropTypes.string,
+        link_live: PropTypes.string,
+        link_github: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.array,
+        ]),
+    }),
+};
+PortfolioCard.defaultProps = {
+    item: {
+        image: '',
+        text: '',
+        link_live: '',
+        link_github: '',
+    },
+};
+
+const Portfolio = () => {
+    const dispatch = useDispatch();
+    const list = useSelector(state => state.portfolioReducer);
+    
+    useEffect(() => {
+        dispatch(fetchPortfolioBegin());
+    }, []);
+
+    useEffect(()=> {
+        console.log('render 後執行');
+        return () => {
+            console.log(`render 移除後`);
+        }
+        //放空陣列只會在render後跑一次
+    },[]);
+    useEffect(()=> {
+        console.log(`state改變成 ${list}`);
+        console.log(`========`);
+        imageLoaded(list);
+        return () => {
+            console.log(`state改變前 ${list}`);
+        }
+    },[list]);
+
+    return (
         <div className="protfolio-content">
             {list.portfolioList.map((list,index)=>{
                 return(
@@ -101,38 +161,8 @@ const Portfolio = () => {
                             {list.protfolio_list.map((e,i)=>{
                                 console.log(e.hidden)
                                 if(e.hidden!==true){
-                                    return(
-                                        <div className={"protfolio-card"} key={i}>
-                                            <div className="protfolio-card-padding">
-                                                <div className="protfolio-card-content">
-                                                    <div className="image-block">
-                                                        <img src={e.image} />
-                                                    </div>
-                                                    <div className="wording-area">
-                                                        <div className="text-block">
-                                                            <div className="font-card-title">{e.name}</div>
-                                                            {(e.text)?
-                                                                <div className="font-card-text"
-                                                                    dangerouslySetInnerHTML={{__html: e.text}}
-                                                                >
-                                                                </div>:""
-                                                            }
-                                                        </div>
-                                                        {(e.link_live||e.link_github)?
-                                                            <div className="link-block">
-                                                                {(e.link_live)?
-                                                                    <a href={e.link_live} className="font-card-icon font-card-icon--live" target="_blank" rel="nofollow noopener noreferrer">
-                                                                        <i className="fa fa-desktop" aria-hidden="true"></i>
-                                                                    </a>:""
-                                                                }
-                                                                {gitlinkbuild(e.link_github)}
-                                                            </div>
-                                                            :""
-                                                        }
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    return (
+                                        <PortfolioCard item={e} key={i} />
                                     )
                                 }
                             })}
