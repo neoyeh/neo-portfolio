@@ -10,6 +10,27 @@
         "link_github": "https://neoyeh.github.io/neo-portfolio/dist"
       },
       {
+        "name": "VIVE Flow",
+        "image": "./img/2021-pdp-tracker3.jpg",
+        "text": "品牌產品頁面切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
+        "link_live": "https://www.vive.com/us/product/vive-flow/overview/",
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-hubble/default-prototype.htm"
+      },
+      {
+        "name": "VIVE Pro2",
+        "image": "./img/2021-pdp-tracker3.jpg",
+        "text": "品牌產品頁面切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
+        "link_live": "https://www.vive.com/us/product/vive-pro2/overview/",
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-vivepro2/default-prototype.htm"
+      },
+      {
+        "name": "VIVE Focus3",
+        "image": "./img/2021-pdp-tracker3.jpg",
+        "text": "品牌產品頁面切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
+        "link_live": "https://www.vive.com/us/product/vive-focus3/overview/",
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-sunrise/default-prototype.htm"
+      },
+      {
         "name": "VIVE Tracker 3.0",
         "image": "./img/2021-pdp-tracker3.jpg",
         "text": "品牌產品頁面切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
