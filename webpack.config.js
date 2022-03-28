@@ -14,6 +14,7 @@ module.exports = {
     contentBase: './dist',
     port: 8888,
   },
+  devtool: 'source-map',
   resolve: { extensions: ['.js', '.jsx'] },
   module: {
     rules: [

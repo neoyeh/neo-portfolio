@@ -26,6 +26,8 @@ import ComponentTesting from '../Counter';
 import Portfolio from '../Portfolio';
 import About from '../About';
 
+{/* Three js */}
+import ThreeJsWork from '../ThreeJsWork';
 
 
 
@@ -44,16 +46,22 @@ const Header = () => (
                 <li><Link to={`/componentRouterMatch/test`}>ComponentRouterMatch</Link></li>
                 <li><Link to={`/componentTesting`}>ComponentTesting</Link></li> */}
 
-                {/* <li>
+                <li>
                     <NavLink activeClassName="active" to="/about">
                         <i className="fa fa-user-o" aria-hidden="true"></i>
                         <span>首頁</span>    
                     </NavLink>
-                </li>           */}
+                </li>          
                 <li>
-                    <NavLink activeClassName="active" to={`/`}>
+                    <NavLink exact activeClassName="active" to={`/`}>
                         <i className="fa fa-cubes" aria-hidden="true"></i>
                         <span>作品</span>    
+                    </NavLink>
+                </li> 
+                <li>
+                    <NavLink activeClassName="active" to={`/threeJsWork`}>
+                        <i className="fa fa-cube" aria-hidden="true"></i>
+                        <span>3D</span>    
                     </NavLink>
                 </li>          
                 {/* <li>
@@ -84,8 +92,9 @@ const Header = () => (
                 <Route path="/componentTesting" component={ComponentTesting} />
 
                 <Route path="/about" component={About} />
-                <Route path="/" component={Portfolio} />
+                <Route path="/threeJsWork" component={ThreeJsWork} />
                 <Route path="/portfolio" component={Portfolio} />
+                <Route path="/" component={Portfolio} />
             </Switch>
         </div>
     </div>
