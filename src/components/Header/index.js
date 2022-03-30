@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {Suspense} from 'react';
 import { Switch, Route, Link, NavLink} from 'react-router-dom';
 
 
@@ -27,7 +27,9 @@ import Portfolio from '../Portfolio';
 import About from '../About';
 
 {/* Three js */}
-import ThreeJsWork from '../ThreeJsWork';
+// import ThreeJsWork from '../ThreeJsWork';
+const ThreeJsWork = React.lazy(() => import('../ThreeJsWork'));
+
 
 
 
@@ -79,6 +81,8 @@ const Header = () => (
             </ul>
         </div>
         <div className="page"> 
+            <Suspense fallback={<div>Loading...</div>}>
+
             <Switch>
                 <Route path="/componentUseState" component={ComponentUseState} />
                 <Route path="/componentUseEffect1" component={ComponentUseEffect1} />
@@ -96,6 +100,8 @@ const Header = () => (
                 <Route path="/portfolio" component={Portfolio} />
                 <Route path="/" component={Portfolio} />
             </Switch>
+            </Suspense>
+
         </div>
     </div>
 );

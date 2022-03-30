@@ -16,11 +16,11 @@ const Model = () => {
 const ThreeJsWork = () => {
     return (
         <Canvas>
-            <Suspense fallback={null}>
+          <Suspense fallback={null}>
             <Model />
             <OrbitControls />
             <Environment preset="sunset" />
-        </Suspense>
+          </Suspense>
         </Canvas>
     )
 };
