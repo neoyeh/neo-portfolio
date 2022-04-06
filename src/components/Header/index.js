@@ -23,7 +23,8 @@ import ComponentRouterMatch from '../Content';
 import ComponentTesting from '../Counter';
 
 {/* React Portfolio */}
-import Portfolio from '../Portfolio';
+// import Portfolio from '../Portfolio';
+const Portfolio = React.lazy(() => import('../Portfolio'));
 import About from '../About';
 
 {/* Three js */}

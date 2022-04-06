@@ -1,48 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPortfolioBegin } from '../../action/portfolio';
 import PropTypes from 'prop-types';
-
-const showFunc = () => {
-    [...document.querySelectorAll('.protfolio-card')].map((e, i)=>{
-        if(e){
-            setTimeout(() => {
-                e.classList.add('done');
-            }, 25*i);
-        }
-    });
-    Array.from(document.querySelectorAll('.protfolio-year')).forEach((e, i)=>{
-        if(e){
-            setTimeout(() => {
-                e.classList.add('done');
-            }, 250*i);
-        }
-    });
-}
-
-const imageLoaded = (list) => {
-    showFunc();
-    Promise.all(Array.from(document.images).map(img => {
-        if (img.complete)
-            return Promise.resolve(img.naturalHeight !== 0);
-        return new Promise(resolve => {
-            img.addEventListener('load', () => resolve(true));
-            img.addEventListener('error', () => resolve(false));
-        });
-    })).then(results => {
-        if (results.every(res => res)){
-            console.log('all images loaded successfully');
-            showFunc();
-        }else{
-            console.log('some images failed to load, all finished loading');
-            showFunc();
-        }
-    });
-}
-
+import LazyImage from "../lazy-image.js";
 
 const PortfolioCard = ({item}) => {
     const {
+        project_name,
         image,
         text,
         link_live,
@@ -71,17 +35,20 @@ const PortfolioCard = ({item}) => {
             return "";
         };
     };
-
     return (
         <div className={"protfolio-card"}>
             <div className="protfolio-card-padding">
                 <div className="protfolio-card-content">
                     <div className="image-block">
-                        <img src={image} />
+                        <LazyImage 
+                            src={image} 
+                            srcset={image} 
+                            alt={project_name}
+                        />
                     </div>
                     <div className="wording-area">
                         <div className="text-block">
-                            <div className="font-card-title">{name}</div>
+                            <div className="font-card-title">{project_name}</div>
                             {(text)?
                                 <div className="font-card-text"
                                     dangerouslySetInnerHTML={{__html: text}}
@@ -135,42 +102,28 @@ const Portfolio = () => {
         dispatch(fetchPortfolioBegin());
     }, []);
 
-    useEffect(()=> {
-        console.log('render 後執行');
-        return () => {
-            console.log(`render 移除後`);
-        }
-        //放空陣列只會在render後跑一次
-    },[]);
-    useEffect(()=> {
-        console.log(`state改變成 ${list}`);
-        console.log(`========`);
-        imageLoaded(list);
-        return () => {
-            console.log(`state改變前 ${list}`);
-        }
-    },[list]);
-
     return (
-        <div className="protfolio-content">
-            {list.portfolioList.map((list,index)=>{
-                return(
-                    <div className="protfolio-list" key={index}>
-                        <div className="protfolio-year">{list.years}</div>
-                        <div className="protfolio-list-content">
-                            {list.protfolio_list.map((e,i)=>{
-                                console.log(e.hidden)
-                                if(e.hidden!==true){
-                                    return (
-                                        <PortfolioCard item={e} key={i} />
-                                    )
-                                }
-                            })}
+        <Suspense fallback={null}>
+            <div className="protfolio-content">
+                {list.portfolioList.map((list,index)=>{
+                    return(
+                        <div className="protfolio-list" key={index}>
+                            <div className="protfolio-year">{list.years}</div>
+                            <div className="protfolio-list-content">
+                                {list.protfolio_list.map((e,i)=>{
+                                    console.log(e.hidden)
+                                    if(e.hidden!==true){
+                                        return (
+                                            <PortfolioCard item={e} key={i} />
+                                        )
+                                    }
+                                })}
+                            </div>
                         </div>
-                    </div>
-                )
-            })}
-        </div>
+                    )
+                })}
+            </div>
+        </Suspense>
     )
 };
 
