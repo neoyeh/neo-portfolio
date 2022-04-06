@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPortfolioBegin } from '../../action/portfolio';
 import PropTypes from 'prop-types';
@@ -103,27 +103,25 @@ const Portfolio = () => {
     }, []);
 
     return (
-        <Suspense fallback={null}>
-            <div className="protfolio-content">
-                {list.portfolioList.map((list,index)=>{
-                    return(
-                        <div className="protfolio-list" key={index}>
-                            <div className="protfolio-year">{list.years}</div>
-                            <div className="protfolio-list-content">
-                                {list.protfolio_list.map((e,i)=>{
-                                    console.log(e.hidden)
-                                    if(e.hidden!==true){
-                                        return (
-                                            <PortfolioCard item={e} key={i} />
-                                        )
-                                    }
-                                })}
-                            </div>
+        <div className="protfolio-content">
+            {list.portfolioList.map((list,index)=>{
+                return(
+                    <div className="protfolio-list" key={index}>
+                        <div className="protfolio-year">{list.years}</div>
+                        <div className="protfolio-list-content">
+                            {list.protfolio_list.map((e,i)=>{
+                                console.log(e.hidden)
+                                if(e.hidden!==true){
+                                    return (
+                                        <PortfolioCard item={e} key={i} />
+                                    )
+                                }
+                            })}
                         </div>
-                    )
-                })}
-            </div>
-        </Suspense>
+                    </div>
+                )
+            })}
+        </div>
     )
 };
 
