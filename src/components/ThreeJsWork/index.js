@@ -3,13 +3,15 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { Environment, OrbitControls } from "@react-three/drei"
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
+import gltfPath from '../../assets/scene.gltf';
+
 const Model = () => {
-    const gltf = useLoader(GLTFLoader, "/scene.gltf");
-    return (
-      <>
-        <primitive object={gltf.scene} scale={0.4} />
-      </>
-    );
+  const gltf = useLoader(GLTFLoader, gltfPath);
+  return (
+    <>
+      <primitive object={gltf.scene} scale={0.4} />
+    </>
+  );
 };
 
 

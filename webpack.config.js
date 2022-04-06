@@ -75,6 +75,14 @@ module.exports = {
             loader: 'file-loader',
         }]
       },
+      {
+        test: /\.(gltf)$/,
+        use: [
+          {
+            loader: "file-loader"
+          }
+        ]
+      }
     ],
   },
   plugins: [
