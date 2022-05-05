@@ -189,6 +189,10 @@ body{
     padding-right: 0;
     padding-bottom: $mobile-nav-height;
   }
+  .canvas-stats{
+    right: 0 !important;
+    left: auto !important;
+  }
 }
 
 .protfolio-content{

@@ -15,23 +15,18 @@ import ComponentContent from '../ComponentContent';
 import ComponentRedux from '../ComponentRedux';
 {/* redux&saga */}
 import ComponentSaga from '../ComponentSaga';
-{/* twitch img resize */}
-import ComponentCard from '../ComponentCard';
 {/* Router match */}
 import ComponentRouterMatch from '../Content';
 {/* React Testing Library */}
 import ComponentTesting from '../Counter';
 
 {/* React Portfolio */}
-// import Portfolio from '../Portfolio';
 const Portfolio = React.lazy(() => import('../Portfolio'));
 import About from '../About';
 
 {/* Three js */}
-// import ThreeJsWork from '../ThreeJsWork';
 const ThreeJsWork = React.lazy(() => import('../ThreeJsWork'));
-
-
+const CreeperContent = React.lazy(() => import('../CreeperContent'));
 
 
 const Header = () => (
@@ -45,7 +40,6 @@ const Header = () => (
                 <li><Link to="/componentContent">ComponentContent</Link></li>
                 <li><Link to="/componentRedux">ComponentRedux</Link></li>
                 <li><Link to="/componentSaga">ComponentSaga</Link></li>
-                <li><Link to="/componentCard">ComponentCard</Link></li>
                 <li><Link to={`/componentRouterMatch/test`}>ComponentRouterMatch</Link></li>
                 <li><Link to={`/componentTesting`}>ComponentTesting</Link></li> */}
 
@@ -65,6 +59,12 @@ const Header = () => (
                     <NavLink activeClassName="active" to={`/threeJsWork`}>
                         <i className="fa fa-cube" aria-hidden="true"></i>
                         <span>3D</span>    
+                    </NavLink>
+                </li>   
+                <li>
+                    <NavLink activeClassName="active" to={`/creeperContent`}>
+                        <i className="fa fa-cube" aria-hidden="true"></i>
+                        <span>Creeper</span>    
                     </NavLink>
                 </li>          
                 {/* <li>
@@ -92,12 +92,12 @@ const Header = () => (
                 <Route path="/componentContent" component={ComponentContent} />
                 <Route path="/componentRedux" component={ComponentRedux} />
                 <Route path="/componentSaga" component={ComponentSaga} />
-                <Route path="/componentCard" component={ComponentCard} />
                 <Route path="/componentRouterMatch/:taskName" component={ComponentRouterMatch} />
                 <Route path="/componentTesting" component={ComponentTesting} />
 
                 <Route path="/about" component={About} />
                 <Route path="/threeJsWork" component={ThreeJsWork} />
+                <Route path="/creeperContent" component={CreeperContent} />
                 <Route path="/portfolio" component={Portfolio} />
                 <Route path="/" component={Portfolio} />
             </Switch>
