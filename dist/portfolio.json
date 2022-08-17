@@ -92,9 +92,9 @@
       {
         "project_name": "Suger PAPA",
         "image": "./img/2020-sugerpapa.jpg",
-        "text": "交友網站切版</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
+        "text": "交友網站切版(未營運)</br>Independent Work</br>Bootstrap4 | Responsive Web Design",
         "link_live": "https://www.asugarpapa.com/",
-        "link_github": "#"
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/asugarpapa/"
       }
     ]
   },
