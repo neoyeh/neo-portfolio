@@ -10,6 +10,7 @@
         "link_github": "https://neoyeh.github.io/neo-portfolio/dist"
       },
       {
+        "hidden": true,
         "project_name": "VIVE Flow Revamp",
         "image": "./img/2022-pdp-vive-flow.jpg",
         "text": "品牌產品頁面切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
