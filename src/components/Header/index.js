@@ -1,7 +1,8 @@
-
-import React, {Suspense} from 'react';
-import { Switch, Route, Link, NavLink} from 'react-router-dom';
-
+import React, { Suspense } from 'react';
+import {
+  // eslint-disable-next-line no-unused-vars
+  Switch, Route, Link, NavLink,
+} from 'react-router-dom';
 
 {/* useState */}
 import ComponentUseState from '../ComponentUseState'; 
@@ -27,7 +28,6 @@ import About from '../About';
 {/* Three js */}
 const ThreeJsWork = React.lazy(() => import('../ThreeJsWork'));
 const CreeperContent = React.lazy(() => import('../CreeperContent'));
-
 
 const Header = () => (
     <div>
@@ -61,12 +61,12 @@ const Header = () => (
                         <span>3D</span>    
                     </NavLink>
                 </li>   
-                <li>
+                {/* <li>
                     <NavLink activeClassName="active" to={`/creeperContent`}>
                         <i className="fa fa-cube" aria-hidden="true"></i>
                         <span>Creeper</span>    
                     </NavLink>
-                </li>          
+                </li> */}
                 {/* <li>
                     <NavLink activeClassName="active" to={`/portfolio`}>
                         <i className="fa fa-cubes" aria-hidden="true"></i>
@@ -107,4 +107,4 @@ const Header = () => (
     </div>
 );
 
-export default Header; 
+export default Header;
