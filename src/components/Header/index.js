@@ -43,12 +43,12 @@ const Header = () => (
                 <li><Link to={`/componentRouterMatch/test`}>ComponentRouterMatch</Link></li>
                 <li><Link to={`/componentTesting`}>ComponentTesting</Link></li> */}
 
-                <li>
+                {/* <li>
                     <NavLink activeClassName="active" to="/about">
                         <i className="fa fa-user-o" aria-hidden="true"></i>
                         <span>首頁</span>    
                     </NavLink>
-                </li>          
+                </li>           */}
                 <li>
                     <NavLink exact activeClassName="active" to={`/`}>
                         <i className="fa fa-cubes" aria-hidden="true"></i>
