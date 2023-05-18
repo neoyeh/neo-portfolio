@@ -1,6 +1,6 @@
 [
   {
-    "years": "2022",
+    "years": "2023",
     "protfolio_list": [
       {
         "hidden": true,
@@ -9,6 +9,18 @@
         "image": "https://fakeimg.pl/700x345/",
         "link_github": "https://neoyeh.github.io/neo-portfolio/dist"
       },
+      {
+        "project_name": "HTC U23 pro",
+        "image": "./img/2023-htc-u23-pro.jpg",
+        "text": "品牌產品頁面切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
+        "link_live": "https://www.htc.com/tw/smartphones/htc-u23-pro/",
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/htc-u23-pro/default-prototype.html"
+      }
+    ]
+  },
+  {
+    "years": "2022",
+    "protfolio_list": [
       {
         "project_name": "VIVE Flow Revamp",
         "image": "./img/2022-pdp-vive-flow.jpg",
