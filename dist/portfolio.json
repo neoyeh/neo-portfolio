@@ -1,6 +1,6 @@
 [
   {
-    "years": "2023",
+    "years": "2024",
     "protfolio_list": [
       {
         "hidden": true,
@@ -9,6 +9,18 @@
         "image": "https://fakeimg.pl/700x345/",
         "link_github": "https://neoyeh.github.io/neo-portfolio/dist"
       },
+      {
+        "project_name": "VIVE FULL FACE TRACKER",
+        "image": "./img/2024-full-face-tracker.jpg",
+        "text": "品牌產品頁面切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
+        "link_live": "https://www.vive.com/us/accessory/vive-full-face-tracker/",
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-full-face-tracker/default-prototype.html"
+      }
+    ]
+  },
+  {
+    "years": "2023",
+    "protfolio_list": [
       {
         "project_name": "HTC U23 pro",
         "image": "./img/2023-htc-u23-pro.jpg",
