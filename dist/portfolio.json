@@ -10,11 +10,18 @@
         "link_github": "https://neoyeh.github.io/neo-portfolio/dist"
       },
       {
+        "project_name": "HTC U24 PRO",
+        "image": "./img/2024-htc-u24-pro.jpg",
+        "text": "品牌產品頁面切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
+        "link_live": "https://www.htc.com/tw/smartphones/htc-u24-pro/",
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-full-face-tracker/default-prototype.html"
+      },
+      {
         "project_name": "VIVE FULL FACE TRACKER",
         "image": "./img/2024-full-face-tracker.jpg",
         "text": "品牌產品頁面切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
         "link_live": "https://www.vive.com/us/accessory/vive-full-face-tracker/",
-        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-full-face-tracker/default-prototype.html"
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/htc-u24-pro/default-prototype.html"
       }
     ]
   },
