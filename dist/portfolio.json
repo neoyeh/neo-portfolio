@@ -10,6 +10,13 @@
         "link_github": "https://neoyeh.github.io/neo-portfolio/dist"
       },
       {
+        "project_name": "VIVE FOCUS VISION",
+        "image": "./img/2024-vive-focus-vision.jpg",
+        "text": "品牌產品頁面切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
+        "link_live": "https://www.vive.com/us/product/vive-focus-vision/overview/",
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/vive-focus-vision/default-prototype.html"
+      },
+      {
         "project_name": "HTC U24 PRO",
         "image": "./img/2024-htc-u24-pro.jpg",
         "text": "品牌產品頁面切版</br>Independent Work</br>Scrollmagic | Responsive Web Design",
