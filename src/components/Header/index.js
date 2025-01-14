@@ -52,15 +52,15 @@ const Header = () => (
                 <li>
                     <NavLink exact activeClassName="active" to={`/`}>
                         <i className="fa fa-cubes" aria-hidden="true"></i>
-                        <span>作品</span>    
+                        <span>Projects</span>    
                     </NavLink>
                 </li> 
-                <li>
+                {/* <li>
                     <NavLink activeClassName="active" to={`/threeJsWork`}>
                         <i className="fa fa-cube" aria-hidden="true"></i>
                         <span>3D</span>    
                     </NavLink>
-                </li>   
+                </li>    */}
                 {/* <li>
                     <NavLink activeClassName="active" to={`/creeperContent`}>
                         <i className="fa fa-cube" aria-hidden="true"></i>

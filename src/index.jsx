@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-// import styles from './css-src/index.scss';
 import './css-src/index.scss';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
