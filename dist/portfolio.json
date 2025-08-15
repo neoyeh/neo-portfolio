@@ -1,6 +1,6 @@
 [
   {
-    "years": "2024",
+    "years": "2025",
     "protfolio_list": [
       {
         "hidden": true,
@@ -9,6 +9,18 @@
         "image": "https://fakeimg.pl/700x345/",
         "link_github": "https://neoyeh.github.io/neo-portfolio/dist"
       },
+      {
+        "project_name": "VIVE Eagle",
+        "image": "./img/2025-vive-eagle.jpg",
+        "text": "品牌產品頁面切版</br>Independent Work | Responsive Web Design",
+        "link_live": "https://www.vive.com/tw/product/vive-eagle/overview/",
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/vive-eagle/default-tw-prototype.html"
+      }
+    ]
+  },
+  {
+    "years": "2024",
+    "protfolio_list": [
       {
         "project_name": "VIVE FOCUS VISION",
         "image": "./img/2024-vive-focus-vision.jpg",
