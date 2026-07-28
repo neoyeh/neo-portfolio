@@ -110,7 +110,6 @@ const Portfolio = () => {
                         <div className="protfolio-year">{list.years}</div>
                         <div className="protfolio-list-content">
                             {list.protfolio_list.map((e,i)=>{
-                                console.log(e.hidden)
                                 if(e.hidden!==true){
                                     return (
                                         <PortfolioCard item={e} key={i} />

@@ -1,29 +1,12 @@
 import React, { Suspense } from 'react';
 import {
-  // eslint-disable-next-line no-unused-vars
-  Switch, Route, Link, NavLink,
+  Switch, Route, NavLink,
 } from 'react-router-dom';
 
-{/* useState */}
-import ComponentUseState from '../ComponentUseState'; 
-{/* useEffect */}
-import { ComponentUseEffect1,ComponentUseEffect2 } from '../ComponentUseEffect'; 
-{/* proptypes */}
-import ComponentPropType from '../ComponentPropType';
-{/* useContext */}
-import ComponentContent from '../ComponentContent';
-{/* redux */}
-import ComponentRedux from '../ComponentRedux';
-{/* redux&saga */}
-import ComponentSaga from '../ComponentSaga';
-{/* Router match */}
-import ComponentRouterMatch from '../Content';
-{/* React Testing Library */}
-import ComponentTesting from '../Counter';
+import About from '../About';
 
 {/* React Portfolio */}
 const Portfolio = React.lazy(() => import('../Portfolio'));
-import About from '../About';
 
 {/* Three js */}
 const ThreeJsWork = React.lazy(() => import('../ThreeJsWork'));
@@ -33,16 +16,6 @@ const Header = () => (
     <div>
         <div className="nav-bar">
             <ul className="nav-content">
-                {/* <li><Link to="/componentUseState">ComponentUseState</Link></li>
-                <li><Link to="/componentUseEffect1">ComponentUseEffect1</Link></li>
-                <li><Link to="/componentUseEffect2">ComponentUseEffect2</Link></li>
-                <li><Link to="/componentPropType">ComponentPropType</Link></li>
-                <li><Link to="/componentContent">ComponentContent</Link></li>
-                <li><Link to="/componentRedux">ComponentRedux</Link></li>
-                <li><Link to="/componentSaga">ComponentSaga</Link></li>
-                <li><Link to={`/componentRouterMatch/test`}>ComponentRouterMatch</Link></li>
-                <li><Link to={`/componentTesting`}>ComponentTesting</Link></li> */}
-
                 {/* <li>
                     <NavLink activeClassName="active" to="/about">
                         <i className="fa fa-user-o" aria-hidden="true"></i>
@@ -85,16 +58,6 @@ const Header = () => (
             <Suspense fallback={<div>Loading...</div>}>
 
             <Switch>
-                <Route path="/componentUseState" component={ComponentUseState} />
-                <Route path="/componentUseEffect1" component={ComponentUseEffect1} />
-                <Route path="/componentUseEffect2" component={ComponentUseEffect2} />
-                <Route path="/componentPropType" render={() => <ComponentPropType names={['1','2','3','4']} />} />
-                <Route path="/componentContent" component={ComponentContent} />
-                <Route path="/componentRedux" component={ComponentRedux} />
-                <Route path="/componentSaga" component={ComponentSaga} />
-                <Route path="/componentRouterMatch/:taskName" component={ComponentRouterMatch} />
-                <Route path="/componentTesting" component={ComponentTesting} />
-
                 <Route path="/about" component={About} />
                 <Route path="/threeJsWork" component={ThreeJsWork} />
                 <Route path="/creeperContent" component={CreeperContent} />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import moment from "moment";
 
 
@@ -130,22 +130,7 @@ const About = () => {
         }
     ])
     const years = moment().diff('1991-08-08', 'years');
-    useEffect(()=> {
-        console.log('render 後執行');
-        console.log(years);
-        return () => {
-            console.log(`render 移除後`);
-        }
-        //放空陣列只會在render後跑一次
-    },[])
-    useEffect(()=> {
-        console.log(`state改變成 ${list}`);
-        console.log(`========`);
-        return () => {
-            console.log(`state改變前 ${list}`);
-        }
-    },[list])
-    
+
     return (
         <div className="protfolio-content">
             {years}
