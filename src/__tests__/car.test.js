@@ -1,4 +1,4 @@
-import uuid from 'uuid/v1';
+import { v1 as uuidv1 } from 'uuid';
 import car from '../utils/car';
 import { add, sub } from '../utils/math';
 
@@ -31,7 +31,9 @@ describe('Check add', () => {
 });
 
 
-jest.mock('uuid/v1');
+jest.mock('uuid', () => ({
+  v1: jest.fn(),
+}));
 
 const getCurrentCarSpy = jest.spyOn(
   car, 'getCurrentCar',
@@ -39,13 +41,13 @@ const getCurrentCarSpy = jest.spyOn(
 
 describe('addProdToCar', () => {
   beforeAll(() => {
-    uuid.mockReturnValue('9999');
+    uuidv1.mockReturnValue('9999');
   });
 
   test('check_add_prod', () => {
     const newCar = car.addProdToCar('apple', 3);
-    expect(uuid).toHaveBeenCalled();
-    expect(uuid.mock.calls.length).toBe(1);
+    expect(uuidv1).toHaveBeenCalled();
+    expect(uuidv1.mock.calls.length).toBe(1);
     expect(getCurrentCarSpy).toHaveBeenCalled();
     expect(newCar).toEqual(
       [{ id: '9999', name: 'apple', count: 3 }],

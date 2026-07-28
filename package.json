@@ -67,7 +67,7 @@
     "regenerator-runtime": "^0.14.1",
     "sass": "^1.102.0",
     "three": "^0.162.0",
-    "uuid": "^3.3.3",
+    "uuid": "^14.0.1",
     "vanilla-lazyload": "^17.6.1"
   }
 }

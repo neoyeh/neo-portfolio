@@ -1,4 +1,4 @@
-import uuid from 'uuid/v1';
+import { v1 as uuidv1 } from 'uuid';
 
 const car = {
 
@@ -9,7 +9,7 @@ const car = {
     addProdToCar: (name,count) => {
         const workCar = [...car.getCurrentCar()];
         workCar.push({
-            id: uuid(),
+            id: uuidv1(),
             name,
             count
         });
