@@ -5,7 +5,7 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 module.exports = {
   
-  entry: ['@babel/polyfill', './src/index.jsx'],
+  entry: ['core-js/stable', 'regenerator-runtime/runtime', './src/index.jsx'],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, './dist/'),
