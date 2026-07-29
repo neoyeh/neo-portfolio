@@ -1,3 +1,6 @@
+// See src/utils/car.js for why this needs the eslint-disable — same
+// eslint-import-resolver-node limitation with uuid's conditional exports map.
+// eslint-disable-next-line import/no-unresolved
 import { v1 as uuidv1 } from 'uuid';
 import car from '../utils/car';
 import { add, sub } from '../utils/math';
