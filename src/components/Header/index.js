@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import {
-  Switch, Route, NavLink,
+  Routes, Route, NavLink,
 } from 'react-router-dom';
 
 import About from '../About';
@@ -24,7 +24,11 @@ function Header() {
                     </NavLink>
                 </li>           */}
                   <li>
-                      <NavLink exact activeClassName="active" to="/">
+                      <NavLink
+                        to="/"
+                        className={({ isActive }) => (isActive ? 'active' : undefined)}
+                        end
+                      >
                           <i className="fa fa-cubes" aria-hidden="true" />
                           <span>Projects</span>
                       </NavLink>
@@ -58,13 +62,13 @@ function Header() {
           <div className="page">
               <Suspense fallback={<div>Loading...</div>}>
 
-                  <Switch>
-                      <Route path="/about" component={About} />
-                      <Route path="/threeJsWork" component={ThreeJsWork} />
-                      <Route path="/creeperContent" component={CreeperContent} />
-                      <Route path="/portfolio" component={Portfolio} />
-                      <Route path="/" component={Portfolio} />
-                  </Switch>
+                  <Routes>
+                      <Route path="/about" element={<About />} />
+                      <Route path="/threeJsWork" element={<ThreeJsWork />} />
+                      <Route path="/creeperContent" element={<CreeperContent />} />
+                      <Route path="/portfolio" element={<Portfolio />} />
+                      <Route path="/" element={<Portfolio />} />
+                  </Routes>
               </Suspense>
 
           </div>
