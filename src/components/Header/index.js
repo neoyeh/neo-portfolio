@@ -19,7 +19,7 @@ function Header() {
               <ul className="nav-content">
                   {/* <li>
                     <NavLink activeClassName="active" to="/about">
-                        <i className="fa fa-user-o" aria-hidden="true"></i>
+                        <i className="far fa-user" aria-hidden="true"></i>
                         <span>首頁</span>
                     </NavLink>
                 </li>           */}
@@ -29,31 +29,31 @@ function Header() {
                         className={({ isActive }) => (isActive ? 'active' : undefined)}
                         end
                       >
-                          <i className="fa fa-cubes" aria-hidden="true" />
+                          <i className="fas fa-cubes" aria-hidden="true" />
                           <span>Projects</span>
                       </NavLink>
                   </li>
                   {/* <li>
                     <NavLink activeClassName="active" to={`/threeJsWork`}>
-                        <i className="fa fa-cube" aria-hidden="true"></i>
+                        <i className="fas fa-cube" aria-hidden="true"></i>
                         <span>3D</span>
                     </NavLink>
                 </li>    */}
                   {/* <li>
                     <NavLink activeClassName="active" to={`/creeperContent`}>
-                        <i className="fa fa-cube" aria-hidden="true"></i>
+                        <i className="fas fa-cube" aria-hidden="true"></i>
                         <span>Creeper</span>
                     </NavLink>
                 </li> */}
                   {/* <li>
                     <NavLink activeClassName="active" to={`/portfolio`}>
-                        <i className="fa fa-cubes" aria-hidden="true"></i>
+                        <i className="fas fa-cubes" aria-hidden="true"></i>
                         <span>作品</span>
                     </NavLink>
                 </li>           */}
                   {/* <li>
                     <NavLink activeClassName="active" to={`/ComponentUseEffect1`}>
-                        <i className="fa fa-envelope-o" aria-hidden="true"></i>
+                        <i className="far fa-envelope" aria-hidden="true"></i>
                         <span>聯絡資訊</span>
                     </NavLink>
                 </li> */}

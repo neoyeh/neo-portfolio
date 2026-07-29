@@ -26,7 +26,7 @@ function PortfolioCard({
         return (
           data.map((link) => (
               <a href={link} key={link} className="font-card-icon font-card-icon--github" target="_blank" rel="nofollow noopener noreferrer" aria-label="GitHub repository">
-                  <i className="fa fa-github" aria-hidden="true" />
+                  <i className="fab fa-github" aria-hidden="true" />
               </a>
           ))
         );
@@ -67,7 +67,7 @@ function PortfolioCard({
                                 {(linkLive)
                                   ? (
                                       <a href={linkLive} className="font-card-icon font-card-icon--live" target="_blank" rel="nofollow noopener noreferrer" aria-label="Live preview">
-                                          <i className="fa fa-desktop" aria-hidden="true" />
+                                          <i className="fas fa-desktop" aria-hidden="true" />
                                       </a>
                                   ) : ''}
                                 {gitlinkbuild(linkGithub)}
