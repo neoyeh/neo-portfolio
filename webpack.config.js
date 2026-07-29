@@ -1,17 +1,20 @@
 const path = require('path');
+const sass = require('sass');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
+module.exports = (env, argv) => ({
 
-module.exports = {
-  
   entry: ['core-js/stable', 'regenerator-runtime/runtime', './src/index.jsx'],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, './dist/'),
   },
   devServer: {
-    contentBase: './dist',
+    static: {
+      directory: path.resolve(__dirname, './dist'),
+    },
     port: 8888,
   },
   devtool: 'source-map',
@@ -19,83 +22,65 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /.js$/,
+        test: /\.js$/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-syntax-dynamic-import'],
           },
         },
       },
       {
-        test: /.jsx$/,
+        test: /\.jsx$/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-react', '@babel/preset-env'],   
-            plugins: ['@babel/plugin-syntax-dynamic-import'],
+            presets: ['@babel/preset-react', '@babel/preset-env'],
           },
         },
       },
       {
         test: /\.(scss)$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../',
-            },
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              // modules: { localIdentName: '[name]__[local]___[hash:base64:5]' },
-            }
-          },
+          MiniCssExtractPlugin.loader,
+          'css-loader',
           {
             loader: 'sass-loader',
             options: {
-              implementation: require('sass'),
+              implementation: sass,
             },
           },
         ],
       },
       {
         test: /\.(png|jpg|gif)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'img/[name].[ext]',
-            },
-          },
-        ],
+        type: 'asset/resource',
+        generator: {
+          filename: 'img/[name][ext]',
+        },
       },
       {
-        test: /\.(ttf|eot|svg|gif|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: [{
-            loader: 'file-loader',
-        }]
+        test: /\.(ttf|eot|svg|woff|woff2)$/,
+        type: 'asset/resource',
       },
       {
         test: /\.(gltf)$/,
-        use: [
-          {
-            loader: "file-loader"
-          }
-        ]
-      }
+        type: 'asset/resource',
+      },
+    ],
+  },
+  optimization: {
+    minimizer: [
+      new TerserPlugin(),
+      new CssMinimizerPlugin(),
     ],
   },
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'css/index.css',
     }),
-    new BrowserSyncPlugin({
-      host: 'localhost',
-      port: 8889,
-      proxy: 'http://localhost:8888/'
-    })
   ],
-};
+  mode: argv.mode === 'production' ? 'production' : 'development',
+});
