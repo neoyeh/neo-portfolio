@@ -33,7 +33,7 @@ function PortfolioCard({
       }
       return (
           <a href={data} className="font-card-icon font-card-icon--github" target="_blank" rel="nofollow noopener noreferrer" aria-label="GitHub repository">
-              <i className="fa fa-github" aria-hidden="true" />
+              <i className="fab fa-github" aria-hidden="true" />
           </a>
       );
     }
