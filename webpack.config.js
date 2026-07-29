@@ -19,6 +19,7 @@ module.exports = (env, argv) => {
         directory: path.resolve(__dirname, './dist'),
       },
       port: 8888,
+      open: true,
     },
     devtool: 'source-map',
     resolve: { extensions: ['.js', '.jsx'] },
