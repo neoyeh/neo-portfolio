@@ -1,23 +1,20 @@
 // @use rules must precede every other rule in a Sass file (including plain
-// CSS @import), so the local partials and the font-awesome npm package are
-// loaded here at the top instead of further down where the old @import
-// statements used to sit.
+// CSS @import), so the local partials are loaded here at the top instead of
+// further down where the old @import statements used to sit.
+//
+// Font Awesome itself is NOT assembled here from its individual scss
+// partials — hand-@use-ing fontawesome/solid/regular/brands separately hit
+// a real bug: Font Awesome 7's shared "apply the style variables as an
+// actual font-family" base rule only ended up scoped to `.fas` and never
+// applied to `.far`/`.fab`, so brand icons like fa-github rendered as a
+// missing-glyph box (icon "styles" set the right CSS variables, but nothing
+// consumed them into a real font-family declaration). Font Awesome's own
+// pre-built `css/all.min.css` doesn't have this problem, so it's imported
+// directly as a plain CSS file from src/index.jsx instead — see that file
+// and the `.css` rule in webpack.config.js.
 @use 'lib/reset' as *;
 @use 'lib/variables' as *;
 @use 'lib/mixins' as *;
-// font-awesome's solid/regular/brands partials each pull in its own
-// `variables` partial internally and read the webfont path from
-// `$font-path` there. Configuring `variables` here, before anything else
-// loads it, makes every later @use of the same file reuse this
-// configuration (per Dart Sass's module-loading rules) — this is how the
-// webfont urls end up resolvable by css-loader instead of the default
-// "../webfonts" (which only makes sense for a co-located css+webfonts
-// folder layout, not an npm package pulled in via @use).
-@use '@fortawesome/fontawesome-free/scss/variables' with ($font-path: '~@fortawesome/fontawesome-free/webfonts');
-@use '@fortawesome/fontawesome-free/scss/fontawesome';
-@use '@fortawesome/fontawesome-free/scss/solid';
-@use '@fortawesome/fontawesome-free/scss/regular';
-@use '@fortawesome/fontawesome-free/scss/brands';
 
 @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display&display=swap');
 
