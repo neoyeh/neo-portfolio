@@ -4,7 +4,7 @@
 
 **Goal:** Bring every dependency in `package.json` to its currently published `latest` tag (as verified live against the npm registry on 2026-07-28), and update the application/config code so it works correctly under the new major versions — with zero net change in observable behavior.
 
-**Architecture:** This is a tooling/dependency migration, not a feature build. There is no new business logic. Each task bumps one coherent group of packages, then adapts the minimum code required by that group's breaking changes, then re-verifies the existing test suite (`npm test`, 5 passing tests in `src/__tests__/car.test.js`) plus the relevant build command (`npm run build`, `npm start`, or `npm run lint`) before moving on. Tasks are ordered bottom-up: CSS/leaf tooling first, then the JS build pipeline (Babel/Jest/Webpack/ESLint), then the application layer (React, Redux, Router, Three.js) — because the application-layer tasks need a working build to verify against.
+**Architecture:** This is a tooling/dependency migration, not a feature build. There is no new business logic. Each task bumps one coherent group of packages, then adapts the minimum code required by that group's breaking changes, then re-verifies the existing test suite (`npm test`, 5 passing tests in `src/__tests__/car.test.js`) plus the relevant build command (`npm run build`, `npm start`, or `npm run lint`) before moving on. Tasks are ordered bottom-up: CSS/leaf tooling first, then the JS build pipeline (Babel/Jest/Webpack), then ESLint, then the application layer (React, Redux, Router, Three.js) — because the application-layer tasks need a working build to verify against. **Revision note:** Babel, Jest, and Webpack were originally planned as three independent tasks, but Task 4's first execution attempt discovered they are not independent — Babel 8 is published ESM-only, which breaks both `babel-loader` (webpack) and `babel-jest` (Jest) unless those are upgraded in the same step. They are now one merged task (Task 4) so the app never sits in an unbuildable intermediate state.
 
 **Tech Stack:** React 19, Redux 5 / React-Redux 9 / Redux-Saga 1.5, React Router 7, Three.js r185 + @react-three/fiber 9 + @react-three/drei 10, Webpack 5, Babel 8, Jest 30, ESLint 10 (flat config), Sass (Dart Sass).
 
@@ -18,6 +18,7 @@
   - Rewriting the 21 `@import` statements in `src/css-src/*.scss` to `@use`/`@forward` (Dart Sass still supports `@import`, deprecation warning only, not a build break).
   - Fixing the pre-existing cosmetic bugs in `src/components/CreeperContent/crepper.js` (string literals `'THREE.DoubleSide'`, `"0xf0f0f0"` passed where enum/number values are expected) — unrelated to the upgrade, not touched here.
   - Introducing TypeScript — that is a separate, later initiative per the user's own phrasing ("後續導入 typescript") and gets its own plan.
+- **A task's package group is that task's exclusive property.** If executing a task reveals it cannot reach a genuinely working, buildable state without also bumping a package another task owns, that is a plan defect, not a green light to reach into the other task's scope unilaterally — stop and report the conflict for a human decision (this is exactly what happened with the original split Babel/Jest/Webpack tasks, and why they are now merged).
 - Packages already confirmed at `latest` and requiring **no action**: `redux-saga` (1.5.1), `moment` (2.30.1), `redux-logger` (3.0.6), `prop-types` (15.8.1). Do not touch these.
 - `package-lock.json` is gitignored in this repo (see `.gitignore`) — use plain `npm install <pkg>@<version>` per task; do not hand-edit version strings in `package.json`.
 
@@ -32,29 +33,31 @@
 
 **Interfaces:**
 - Consumes: nothing (baseline repo state).
-- Produces: a working Sass compiler for every later task that touches CSS/webpack (Task 6 depends on this).
+- Produces: a working Sass compiler for every later task that touches CSS/webpack (Task 4 depends on this).
 
-- [ ] **Step 1: Remove node-sass, install sass**
+- [x] **Step 1: Remove node-sass, install sass**
 
 ```bash
 npm uninstall node-sass
 npm install sass@1.102.0
 ```
 
-- [ ] **Step 2: Verify `sass-loader@8` (current version, not yet upgraded) auto-detects Dart Sass**
+- [x] **Step 2: Verify `sass-loader@8` (current version, not yet upgraded) auto-detects Dart Sass**
 
 `sass-loader@8` tries to resolve `sass` before falling back to `node-sass`, so no config change is needed yet — this is verified by the build in Step 3.
 
-- [ ] **Step 3: Run the CSS build and full webpack build to confirm the fix**
+**Actual result (this step's assumption was wrong — see completion note below):** auto-detection did not work reliably in this repo's worktree layout (Node module resolution could climb past the worktree into a stray `node-sass` in an ancestor directory). Fixed by pinning `implementation: require('sass')` explicitly in `webpack.config.js`'s `sass-loader` options instead of relying on auto-detection — this is also sass-loader's own documented best practice for avoiding implementation ambiguity, so it stays even outside the worktree scenario that surfaced it.
+
+- [x] **Step 3: Run the CSS build and full webpack build to confirm the fix**
 
 ```bash
 npm run build-css
 npm run build
 ```
 
-Expected: both commands complete without the `Unsupported architecture (arm64)` error. `npm run build` will still show unrelated warnings (webpack 4 deprecation notices) — that's expected until Task 6.
+Expected: both commands complete without the `Unsupported architecture (arm64)` error. `npm run build` will still show unrelated warnings (webpack 4 deprecation notices) — that's expected until Task 4.
 
-- [ ] **Step 4: Run the existing test suite (regression baseline)**
+- [x] **Step 4: Run the existing test suite (regression baseline)**
 
 ```bash
 npm test
@@ -62,12 +65,14 @@ npm test
 
 Expected: `Tests: 5 passed, 5 total`.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add package.json
 git commit -m "chore: replace node-sass with sass (dart-sass) to fix arm64 build"
 ```
+
+**Completed:** commit `d3d0ca3`. Also touched `package.json`'s `build-css` script (Dart Sass CLI syntax differs from node-sass's) and added the explicit `implementation: require('sass')` option to `webpack.config.js` (see Step 2 note) — both necessary corollaries of the swap, not scope creep. Review: clean, one deferred minor (inline `require('sass')` could be hoisted to a top-of-file `const` — done as part of Task 4's full rewrite of this file).
 
 ---
 
@@ -81,16 +86,16 @@ git commit -m "chore: replace node-sass with sass (dart-sass) to fix arm64 build
 
 **Interfaces:**
 - Consumes: nothing new.
-- Produces: the two polyfill entry-point strings that Task 6's rewritten `webpack.config.js` will carry forward unchanged.
+- Produces: the two polyfill entry-point strings that Task 4's rewritten `webpack.config.js` carries forward unchanged.
 
-- [ ] **Step 1: Swap the dependency**
+- [x] **Step 1: Swap the dependency**
 
 ```bash
 npm uninstall @babel/polyfill
 npm install core-js@latest regenerator-runtime@latest
 ```
 
-- [ ] **Step 2: Update the webpack entry point**
+- [x] **Step 2: Update the webpack entry point**
 
 In `webpack.config.js`, change:
 
@@ -104,7 +109,7 @@ to:
   entry: ['core-js/stable', 'regenerator-runtime/runtime', './src/index.jsx'],
 ```
 
-- [ ] **Step 3: Run the build to confirm the polyfill entry still resolves**
+- [x] **Step 3: Run the build to confirm the polyfill entry still resolves**
 
 ```bash
 npm run build
@@ -112,7 +117,7 @@ npm run build
 
 Expected: build succeeds, `dist/bundle.js` is generated, no "module not found" errors for the two new entry strings.
 
-- [ ] **Step 4: Run the test suite**
+- [x] **Step 4: Run the test suite**
 
 ```bash
 npm test
@@ -120,12 +125,14 @@ npm test
 
 Expected: `Tests: 5 passed, 5 total`.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add package.json webpack.config.js
 git commit -m "chore: replace deprecated @babel/polyfill with core-js + regenerator-runtime"
 ```
+
+**Completed:** commit `fd72c43`. Review: clean, no findings.
 
 ---
 
@@ -142,13 +149,13 @@ git commit -m "chore: replace deprecated @babel/polyfill with core-js + regenera
 - Consumes: nothing new.
 - Produces: `car.js` exporting the same public shape (`car.getCurrentCar`, `car.addProdToCar`) — unchanged for any future consumer.
 
-- [ ] **Step 1: Bump uuid**
+- [x] **Step 1: Bump uuid**
 
 ```bash
 npm install uuid@14.0.1
 ```
 
-- [ ] **Step 2: Rewrite the import in `src/utils/car.js`**
+- [x] **Step 2: Rewrite the import in `src/utils/car.js`**
 
 Change:
 
@@ -200,7 +207,7 @@ const car = {
 export default car;
 ```
 
-- [ ] **Step 3: Rewrite the mock in `src/__tests__/car.test.js`**
+- [x] **Step 3: Rewrite the mock in `src/__tests__/car.test.js`**
 
 Change:
 
@@ -274,7 +281,7 @@ describe('addProdToCar', () => {
 });
 ```
 
-- [ ] **Step 4: Run the test suite and confirm it still passes**
+- [x] **Step 4: Run the test suite and confirm it still passes**
 
 ```bash
 npm test
@@ -282,147 +289,41 @@ npm test
 
 Expected: `Tests: 5 passed, 5 total` (same count as baseline — `check_add_prod` must still pass with the mocked id `'9999'`).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add package.json src/utils/car.js src/__tests__/car.test.js
 git commit -m "fix: migrate uuid/v1 subpath import to named export for uuid@14"
 ```
 
----
-
-### Task 4: Upgrade the Babel toolchain to v8
-
-**Files:**
-- Modify: `package.json:20-26`
-- Modify: `.babelrc.js`
-- Modify: `webpack.config.js` (the two babel-loader rules)
-
-**Interfaces:**
-- Consumes: nothing new.
-- Produces: `.babelrc.js` presets list that Task 6 (webpack rewrite) must keep in sync with.
-
-- [ ] **Step 1: Bump the Babel packages**
-
-```bash
-npm install --save-dev @babel/cli@8.0.4 @babel/core@8.0.1 @babel/preset-env@8.0.2 @babel/preset-react@8.0.1 @babel/preset-typescript@8.0.1 @babel/plugin-transform-runtime@8.0.1
-```
-
-- [ ] **Step 2: Drop `@babel/plugin-syntax-dynamic-import`**
-
-Dynamic `import()` is standard JS syntax and has been parsed natively by Babel without this plugin since Babel 7.8. It is dead weight; Babel 8 does not need it.
-
-```bash
-npm uninstall @babel/plugin-syntax-dynamic-import
-```
-
-Remove every reference to `'@babel/plugin-syntax-dynamic-import'` from the `plugins` arrays in both rules of `webpack.config.js` (the `/.js$/` rule and the `/.jsx$/` rule) — leave the rest of each rule's `presets`/`plugins` untouched for now (Task 6 rewrites this file fully).
-
-- [ ] **Step 3: Run the build and confirm Babel still transpiles correctly**
-
-```bash
-npm run build
-```
-
-Expected: build succeeds, no "unknown plugin" or "unknown option" errors from `babel-loader`.
-
-- [ ] **Step 4: Run the test suite**
-
-```bash
-npm test
-```
-
-Expected: `Tests: 5 passed, 5 total` (Jest uses `.babelrc.js` via `babel-jest`, so this also exercises the Babel 8 upgrade).
-
-- [ ] **Step 5: Commit**
-
-```bash
-git add package.json .babelrc.js webpack.config.js
-git commit -m "chore: upgrade babel toolchain to v8, drop dead dynamic-import syntax plugin"
-```
+**Completed:** commit `e0f804b`. Review: clean, one deferred minor (pre-existing missing trailing newline in `car.js`, not introduced by this task).
 
 ---
 
-### Task 5: Upgrade Jest + Testing Library toolchain
+### Task 4: Upgrade Babel 8, Jest 30, and Webpack 5 together (they are mutually coupled)
 
-The only remaining test file (`src/__tests__/car.test.js`) uses plain `jest.mock`/`jest.spyOn`/`expect` — no DOM, no React rendering. Jest 30's default `testEnvironment` is `"node"`, which is sufficient for it. `@testing-library/react` and `@testing-library/jest-dom` are currently unused in `src` (their only consumers were the tutorial components removed in a previous session) but stay as devDependencies per "upgrade everything" — bumped to latest and made available for whenever DOM-based tests return, via the jsdom package being installed (not the global default).
+**Why merged:** this plan originally split these into three tasks (Babel core+presets, Jest+Testing Library, Webpack+babel-loader), assuming each could land and verify independently. The first execution attempt proved that assumption wrong: `@babel/core@8` is published **ESM-only**. Anything that `require()`s it — the old `babel-loader@8` (webpack) and the old `jest@26`'s config loader — breaks immediately. There is no working intermediate state where only Babel is bumped; `babel-loader` and `jest`/`babel-jest` must move to versions that can consume an ESM-only `@babel/core` in the same step. This task does all three together, as one atomic, verifiably-buildable unit.
 
 **Files:**
-- Modify: `package.json:27-28,41`
+- Modify: `package.json` (Babel core + presets, babel-loader, webpack + webpack-cli + webpack-dev-server + css/style/sass loaders + mini-css-extract-plugin + terser/css-minimizer plugins, jest + jest-environment-jsdom + testing-library packages; remove `@babel/plugin-syntax-dynamic-import`, `browser-sync-webpack-plugin`, `browser-sync`, `file-loader`, `url-loader`)
+- Modify: `webpack.config.js` (full rewrite)
 - Modify: `jest.config.js`
+- `.babelrc.js` needs **no content change** — it currently only has `presets: ['@babel/preset-react', '@babel/preset-env']` and `plugins: ['@babel/plugin-transform-runtime']`; it never referenced `@babel/plugin-syntax-dynamic-import`, so there is nothing to remove from it.
 
 **Interfaces:**
-- Consumes: nothing new.
-- Produces: `jest.config.js` shape (`testEnvironment: 'node'` as global default) that any future test file can override per-file with a `/** @jest-environment jsdom */` docblock.
-
-- [ ] **Step 1: Bump the packages**
-
-```bash
-npm install --save-dev jest@30.4.2 jest-environment-jsdom@30.4.1 @testing-library/react@16.3.2 @testing-library/jest-dom@7.0.0
-```
-
-- [ ] **Step 2: Make the test environment explicit in `jest.config.js`**
-
-Change:
-
-```js
-module.exports = {
-    verbose: true,
-};
-```
-
-to:
-
-```js
-module.exports = {
-    verbose: true,
-    testEnvironment: 'node',
-};
-```
-
-- [ ] **Step 3: Run the test suite**
-
-```bash
-npm test
-```
-
-Expected: `Tests: 5 passed, 5 total`. No warning about a missing `jest-environment-jsdom` package (it's installed, just not the default).
-
-- [ ] **Step 4: Run with coverage to confirm the `test-cov` script still works too**
-
-```bash
-npm run test-cov
-```
-
-Expected: coverage report generated, same 5 passing tests.
-
-- [ ] **Step 5: Commit**
-
-```bash
-git add package.json jest.config.js
-git commit -m "chore: upgrade jest to v30 and testing-library packages, set explicit node test environment"
-```
-
----
-
-### Task 6: Upgrade to Webpack 5 (webpack, webpack-cli, webpack-dev-server, loaders); drop BrowserSync
+- Consumes: the entry-point array from Task 2 (`['core-js/stable', 'regenerator-runtime/runtime', './src/index.jsx']`) and the explicit `implementation: require('sass')` pattern from Task 1 (hoisted to a top-level `const` in this task's rewrite, addressing that task's deferred minor finding).
+- Produces: the final `webpack.config.js` and `jest.config.js` shapes that Tasks 8–11 build/verify against.
 
 `browser-sync-webpack-plugin`'s actual latest published version is `2.4.0` (verified via `npm view browser-sync-webpack-plugin dist-tags` — it has **not** been updated for webpack 5, last release predates it). Rather than gamble on undocumented compatibility, this task removes BrowserSync entirely and relies on `webpack-dev-server`'s own built-in live reload, which is sufficient for local dev.
 
-**Files:**
-- Modify: `package.json:7,10-11,31,32(removed),33,42,44,45,46,47,48`
-- Modify: `webpack.config.js` (full rewrite)
-
-**Interfaces:**
-- Consumes: the entry-point array from Task 2 (`['core-js/stable', 'regenerator-runtime/runtime', './src/index.jsx']`) and the Babel presets from Task 4.
-- Produces: the final `webpack.config.js` shape that Tasks 9–13 build/verify against.
-
-- [ ] **Step 1: Bump webpack and its loaders, drop BrowserSync**
+- [ ] **Step 1: Bump every coupled package together, drop what's being replaced**
 
 ```bash
-npm install --save-dev webpack@5.109.1 webpack-cli@7.2.1 webpack-dev-server@6.0.0 babel-loader@10.1.1 css-loader@7.1.4 style-loader@4.0.0 sass-loader@17.0.0 mini-css-extract-plugin@2.10.2 terser-webpack-plugin@5.6.1 css-minimizer-webpack-plugin@8.0.0
-npm uninstall browser-sync-webpack-plugin browser-sync
+npm install --save-dev @babel/cli@8.0.4 @babel/core@8.0.1 @babel/preset-env@8.0.2 @babel/preset-react@8.0.1 @babel/preset-typescript@8.0.1 @babel/plugin-transform-runtime@8.0.1 babel-loader@10.1.1 webpack@5.109.1 webpack-cli@7.2.1 webpack-dev-server@6.0.0 css-loader@7.1.4 style-loader@4.0.0 sass-loader@17.0.0 mini-css-extract-plugin@2.10.2 terser-webpack-plugin@5.6.1 css-minimizer-webpack-plugin@8.0.0 jest@30.4.2 jest-environment-jsdom@30.4.1 @testing-library/react@16.3.2 @testing-library/jest-dom@7.0.0
+npm uninstall @babel/plugin-syntax-dynamic-import browser-sync-webpack-plugin browser-sync file-loader url-loader
 ```
+
+Dynamic `import()` is standard JS syntax and has been parsed natively by Babel without `@babel/plugin-syntax-dynamic-import` since Babel 7.8 — it was dead weight even before this upgrade. `file-loader`/`url-loader` are replaced by webpack 5's built-in asset modules in Step 2, so they're removed rather than upgraded.
 
 - [ ] **Step 2: Rewrite `webpack.config.js`**
 
@@ -430,6 +331,7 @@ Replace the entire file with:
 
 ```js
 const path = require('path');
+const sass = require('sass');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
@@ -476,7 +378,12 @@ module.exports = (env, argv) => ({
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
-          'sass-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: sass,
+            },
+          },
         ],
       },
       {
@@ -513,17 +420,35 @@ module.exports = (env, argv) => ({
 
 Notes on what changed and why:
 - `mode` is now required by webpack 5 (there is no more implicit default) — read from the CLI `--mode` flag via the function form of the config.
+- The two babel-loader rules have no `plugins` key at all now (that's where `@babel/plugin-syntax-dynamic-import` used to live) — only `presets` remain.
+- `sass` is required once at the top and passed as `sass-loader`'s explicit `implementation` (per Task 1's finding — auto-detection is not reliable enough to depend on).
 - `MiniCssExtractPlugin.loader` no longer needs an explicit `publicPath` option for this project's relative-path setup.
-- `file-loader`/`url-loader` are replaced by webpack 5's built-in [asset modules](https://webpack.js.org/guides/asset-modules/) (`type: 'asset/resource'`) — this removes two dependencies. Delete them:
-
-```bash
-npm uninstall file-loader url-loader
-```
-
+- `file-loader`/`url-loader` are replaced by webpack 5's built-in [asset modules](https://webpack.js.org/guides/asset-modules/) (`type: 'asset/resource'`).
 - `optimization.minimizer` is explicit now because webpack 5 no longer auto-minifies CSS the way `webpack -p` used to in webpack 4; `TerserPlugin` + `CssMinimizerPlugin` reproduce that.
 - The BrowserSync plugin block and its `require` are gone entirely.
 
-- [ ] **Step 3: Update the `build` script in `package.json`**
+- [ ] **Step 3: Make the Jest test environment explicit in `jest.config.js`**
+
+The only remaining test file (`src/__tests__/car.test.js`) uses plain `jest.mock`/`jest.spyOn`/`expect` — no DOM, no React rendering. Jest 30's default `testEnvironment` is `"node"`, which is sufficient. `@testing-library/react` and `@testing-library/jest-dom` are currently unused in `src` (their only consumers were tutorial components removed in a previous session) but stay as devDependencies per "upgrade everything" — bumped to latest and available via the now-installed `jest-environment-jsdom` package for whenever DOM-based tests return (a future test file can opt in per-file with a `/** @jest-environment jsdom */` docblock).
+
+Change:
+
+```js
+module.exports = {
+    verbose: true,
+};
+```
+
+to:
+
+```js
+module.exports = {
+    verbose: true,
+    testEnvironment: 'node',
+};
+```
+
+- [ ] **Step 4: Update the `build` script in `package.json`**
 
 `webpack-cli@7` removed the `-p` shorthand entirely (it was deprecated since webpack-cli 4). Change:
 
@@ -537,15 +462,15 @@ to:
     "build": "webpack --mode production",
 ```
 
-- [ ] **Step 4: Run the production build**
+- [ ] **Step 5: Run the production build**
 
 ```bash
 npm run build
 ```
 
-Expected: `dist/bundle.js` and `dist/css/index.css` are generated, no errors. It's normal to see a Sass deprecation warning about legacy `@import` syntax in `src/css-src/*.scss` (out of scope per Global Constraints) — that is a warning, not a failure.
+Expected: `dist/bundle.js` and `dist/css/index.css` are generated, no errors. It's normal to see a Sass deprecation warning about legacy `@import` syntax in `src/css-src/*.scss` (out of scope per Global Constraints) — that is a warning, not a failure. If Babel/webpack/Jest still don't agree with each other at this point, that is a real blocker for this task — do not work around it by reaching for a different package's version than what Step 1 specifies; stop and report it (see the plan's Global Constraints note on task-scope conflicts).
 
-- [ ] **Step 5: Run the dev server and confirm it serves the app**
+- [ ] **Step 6: Run the dev server and confirm it serves the app**
 
 ```bash
 npm start
@@ -553,24 +478,25 @@ npm start
 
 Expected: server starts on port 8888 without throwing, and stays up (Ctrl+C to stop, or run with a timeout in CI). This replaces the old BrowserSync proxy on port 8889, which no longer exists.
 
-- [ ] **Step 6: Run the test suite**
+- [ ] **Step 7: Run the test suite, then with coverage**
 
 ```bash
 npm test
+npm run test-cov
 ```
 
-Expected: `Tests: 5 passed, 5 total`.
+Expected: `Tests: 5 passed, 5 total` both times. No warning about a missing `jest-environment-jsdom` package (it's installed, just not the default).
 
-- [ ] **Step 7: Commit**
+- [ ] **Step 8: Commit**
 
 ```bash
-git add package.json webpack.config.js
-git commit -m "chore: migrate to webpack 5, replace file/url-loader with asset modules, drop BrowserSync"
+git add package.json webpack.config.js jest.config.js
+git commit -m "chore: upgrade babel to v8, jest to v30, and webpack to v5 together (coupled by babel's ESM-only architecture); drop BrowserSync"
 ```
 
 ---
 
-### Task 7: Fix `imagemin` ESM-only breaking change
+### Task 5: Fix `imagemin` ESM-only breaking change
 
 `imagemin@9` (latest) is published as pure ESM and can no longer be `require()`'d the way `webpack.config.png-to-jpg.js` currently does. This script is a standalone Node script (not run through webpack/babel), so it needs to become an ES module itself.
 
@@ -651,7 +577,7 @@ git commit -m "fix: convert png-to-jpg script to ESM for imagemin@9 compatibilit
 
 ---
 
-### Task 8: Upgrade ESLint to v10 (flat config)
+### Task 6: Upgrade ESLint to v10 (flat config)
 
 ESLint 9+ requires flat config (`eslint.config.js`); the legacy `.eslintrc.js` format is no longer read at all. `eslint-config-airbnb`'s shareable config is still written in the legacy format, so it's bridged in via `@eslint/eslintrc`'s `FlatCompat` helper — this is the standard documented migration path.
 
@@ -750,7 +676,7 @@ git commit -m "chore: migrate eslint to v10 flat config via FlatCompat, fix lint
 
 ---
 
-### Task 9: Bump `vanilla-lazyload` (smoke test only)
+### Task 7: Bump `vanilla-lazyload` (smoke test only)
 
 **Files:**
 - Modify: `package.json:70`
@@ -782,7 +708,7 @@ git commit -m "chore: bump vanilla-lazyload to latest"
 
 ---
 
-### Task 10: Upgrade React + ReactDOM to 19
+### Task 8: Upgrade React + ReactDOM to 19
 
 `ReactDom.render(...)` (used in `src/index.jsx`) was deprecated in React 18 and is **removed entirely** in React 19 — this is the one change in this task that is a hard break, not just a deprecation warning. `PortfolioCard.defaultProps` (function-component `defaultProps`) is also removed in React 19 and must become a JS default parameter.
 
@@ -792,8 +718,8 @@ git commit -m "chore: bump vanilla-lazyload to latest"
 - Modify: `src/components/Portfolio/index.js`
 
 **Interfaces:**
-- Consumes: the webpack config from Task 6.
-- Produces: `src/index.jsx` render entry point that Task 12 (React Router rewrite) edits again in the same file, and the `PortfolioCard` component shape (still accepting an `item` prop with the same fields) that nothing downstream changes further.
+- Consumes: the webpack config from Task 4.
+- Produces: `src/index.jsx` render entry point that Task 10 (React Router rewrite) edits again in the same file, and the `PortfolioCard` component shape (still accepting an `item` prop with the same fields) that nothing downstream changes further.
 
 - [ ] **Step 1: Bump React**
 
@@ -931,7 +857,7 @@ git commit -m "feat: upgrade to react 19, migrate to createRoot and default para
 
 ---
 
-### Task 11: Upgrade Redux ecosystem (redux, react-redux)
+### Task 9: Upgrade Redux ecosystem (redux, react-redux)
 
 No code changes are expected here — `createStore`/`combineReducers`/`applyMiddleware` (Redux 5) and `Provider`/`useSelector`/`useDispatch` (React-Redux 9) all keep the exact same public API this codebase already uses. `redux@5` marks `createStore` as deprecated (docs point to Redux Toolkit) but does not remove it. This task exists purely to bump the version and prove nothing broke.
 
@@ -939,7 +865,7 @@ No code changes are expected here — `createStore`/`combineReducers`/`applyMidd
 - Modify: `package.json:63,65`
 
 **Interfaces:**
-- Consumes: the React 19 upgrade from Task 10 (`react-redux@9` requires React 18+).
+- Consumes: the React 19 upgrade from Task 8 (`react-redux@9` requires React 18+).
 - Produces: nothing consumed elsewhere.
 
 - [ ] **Step 1: Bump the packages**
@@ -981,7 +907,7 @@ git commit -m "chore: upgrade redux to v5 and react-redux to v9"
 
 ---
 
-### Task 12: Upgrade React Router to v7
+### Task 10: Upgrade React Router to v7
 
 React Router v6+ replaced `Switch` with `Routes`, replaced the `component={X}` prop with `element={<X />}`, made all routes exact-match by default (removing the need for the `exact` prop), and removed `NavLink`'s `activeClassName` prop (replaced by a function form of `className`).
 
@@ -990,7 +916,7 @@ React Router v6+ replaced `Switch` with `Routes`, replaced the `component={X}` p
 - Modify: `src/components/Header/index.js`
 
 **Interfaces:**
-- Consumes: `HashRouter` from `src/index.jsx` (Task 10) — untouched, still wraps `<Header />`.
+- Consumes: `HashRouter` from `src/index.jsx` (Task 8) — untouched, still wraps `<Header />`.
 - Produces: nothing consumed elsewhere — `Header` is the app's route leaf.
 
 - [ ] **Step 1: Bump the package**
@@ -1102,9 +1028,9 @@ git commit -m "feat: migrate react-router-dom to v7 (Routes/element/NavLink clas
 
 ---
 
-### Task 13: Upgrade Three.js ecosystem (three, @react-three/fiber, @react-three/drei)
+### Task 11: Upgrade Three.js ecosystem (three, @react-three/fiber, @react-three/drei)
 
-`@react-three/fiber@9` requires React 19 (already done in Task 10). Beyond the version bump, two existing imports use fragile, non-public-API paths that are worth hardening while touching this code: `TextureLoader` is imported from the internal `three/src/...` source tree instead of the stable public `three` export, and `GLTFLoader` is imported from the older `three/examples/jsm/...` path instead of the `three/addons/...` alias three.js has used for its examples since r150+.
+`@react-three/fiber@9` requires React 19 (already done in Task 8). Beyond the version bump, two existing imports use fragile, non-public-API paths that are worth hardening while touching this code: `TextureLoader` is imported from the internal `three/src/...` source tree instead of the stable public `three` export, and `GLTFLoader` is imported from the older `three/examples/jsm/...` path instead of the `three/addons/...` alias three.js has used for its examples since r150+.
 
 **Files:**
 - Modify: `package.json:52-53,68`
@@ -1112,7 +1038,7 @@ git commit -m "feat: migrate react-router-dom to v7 (Routes/element/NavLink clas
 - Modify: `src/components/CreeperContent/crepper.js`
 
 **Interfaces:**
-- Consumes: the React 19 upgrade from Task 10, the React Router routes from Task 12 (`/threeJsWork` and `/creeperContent` must still resolve to these components).
+- Consumes: the React 19 upgrade from Task 8, the React Router routes from Task 10 (`/threeJsWork` and `/creeperContent` must still resolve to these components).
 - Produces: nothing consumed elsewhere — these are route-leaf components.
 
 - [ ] **Step 1: Bump the packages**
@@ -1184,7 +1110,7 @@ git commit -m "chore: upgrade three.js/@react-three ecosystem, harden loader imp
 
 ---
 
-### Task 14: Final full-suite regression pass
+### Task 12: Final full-suite regression pass
 
 **Files:** none (verification only).
 
