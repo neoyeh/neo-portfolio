@@ -1,31 +1,27 @@
-import React, { useRef, useState, Suspense } from 'react'
-import { Canvas, useLoader } from '@react-three/fiber'
-import { Environment, OrbitControls } from "@react-three/drei"
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import React, { Suspense } from 'react';
+import { Canvas, useLoader } from '@react-three/fiber';
+import { Environment, OrbitControls } from '@react-three/drei';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 import gltfPath from '../../assets/scene.gltf';
 
-const Model = () => {
+function Model() {
   const gltf = useLoader(GLTFLoader, gltfPath);
   return (
-    <>
       <primitive object={gltf.scene} scale={0.4} />
-    </>
   );
-};
+}
 
-
-const ThreeJsWork = () => {
-    return (
-        <Canvas>
+function ThreeJsWork() {
+  return (
+      <Canvas>
           <Suspense fallback={null}>
-            <Model />
-            <OrbitControls />
-            <Environment preset="sunset" />
+              <Model />
+              <OrbitControls />
+              <Environment preset="sunset" />
           </Suspense>
-        </Canvas>
-    )
-};
+      </Canvas>
+  );
+}
 
-
-export default ThreeJsWork; 
+export default ThreeJsWork;

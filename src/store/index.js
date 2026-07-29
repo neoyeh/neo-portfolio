@@ -8,19 +8,16 @@ import portfolioReducer from '../reducer/portfolio';
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = combineReducers({
-    portfolioReducer,
+  portfolioReducer,
 });
 
 const middlewares = [sagaMiddleware];
 if (process.env.NODE_ENV !== 'production') {
-    middlewares.push(logger);
+  middlewares.push(logger);
 }
 
-const store = createStore(
-    rootReducer, applyMiddleware(...middlewares),
-);
+const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
 sagaMiddleware.run(rootSaga);
-
 
 export default store;

@@ -2,42 +2,38 @@ import { v1 as uuidv1 } from 'uuid';
 import car from '../utils/car';
 import { add, sub } from '../utils/math';
 
-
 describe('Check sub', () => {
-    // beforeEach(() => {
-    //   console.log('每次執行測試前執行哦');
-    // });
-  
-    // afterAll(() => {
-    //   console.log('所有測試結束後才看得見我');
-    // });
-  
-    test('Check the result of 5 - 2', () => {
-      expect(sub(5, 2)).not.toBe(1);
-    });
+  // beforeEach(() => {
+  //   console.log('每次執行測試前執行哦');
+  // });
 
-    test('Check the result of 5 - 3', () => {
-      expect(sub(5, 3)).toBe(2);
-    });
+  // afterAll(() => {
+  //   console.log('所有測試結束後才看得見我');
+  // });
+
+  test('Check the result of 5 - 2', () => {
+    expect(sub(5, 2)).not.toBe(1);
+  });
+
+  test('Check the result of 5 - 3', () => {
+    expect(sub(5, 3)).toBe(2);
+  });
 });
 describe('Check add', () => {
-    test('Check the result of 5 + 2', () => {
-      expect(add(5, 2)).not.toBe(1);
-    });
+  test('Check the result of 5 + 2', () => {
+    expect(add(5, 2)).not.toBe(1);
+  });
 
-    test('Check the result of 5 + 3', () => {
-      expect(add(5, 3)).toBe(8);
-    });
+  test('Check the result of 5 + 3', () => {
+    expect(add(5, 3)).toBe(8);
+  });
 });
-
 
 jest.mock('uuid', () => ({
   v1: jest.fn(),
 }));
 
-const getCurrentCarSpy = jest.spyOn(
-  car, 'getCurrentCar',
-);
+const getCurrentCarSpy = jest.spyOn(car, 'getCurrentCar');
 
 describe('addProdToCar', () => {
   beforeAll(() => {
@@ -53,5 +49,4 @@ describe('addProdToCar', () => {
       [{ id: '9999', name: 'apple', count: 3 }],
     );
   });
-
 });

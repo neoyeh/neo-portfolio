@@ -1,5 +1,6 @@
-
-export const getPortfolioList = () => (
-    fetch('./portfolio.json')
-        .then(response => response.json())
+const getPortfolioList = () => (
+  fetch('./portfolio.json')
+    .then((response) => response.json())
 );
+
+export default getPortfolioList;
