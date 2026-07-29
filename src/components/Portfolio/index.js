@@ -4,7 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchPortfolioBegin } from '../../action/portfolio';
 import LazyImage from '../lazy-image';
 
-function PortfolioCard({ item }) {
+function PortfolioCard({
+  item = {
+    project_name: '',
+    image: '',
+    text: '',
+    link_live: '',
+    link_github: '',
+  },
+}) {
   const {
     project_name: projectName,
     image,
@@ -73,7 +81,14 @@ function PortfolioCard({ item }) {
   );
 }
 
+// `item` has a JS default parameter (see function signature above) instead of
+// `PortfolioCard.defaultProps`, which React 19 removed for function components.
+// eslint-plugin-react's `functions` option still defaults to 'defaultProps' (not
+// yet 'defaultArguments') and eslint-config-airbnb@19.0.4 hasn't overridden it, so
+// this rule can't see the default-parameter equivalent. Safe to leave; propTypes
+// is superseded by TypeScript in a later migration anyway.
 PortfolioCard.propTypes = {
+  // eslint-disable-next-line react/require-default-props
   item: PropTypes.shape({
     project_name: PropTypes.string,
     image: PropTypes.string,
@@ -84,15 +99,6 @@ PortfolioCard.propTypes = {
       PropTypes.array,
     ]),
   }),
-};
-PortfolioCard.defaultProps = {
-  item: {
-    project_name: '',
-    image: '',
-    text: '',
-    link_live: '',
-    link_github: '',
-  },
 };
 
 function Portfolio() {

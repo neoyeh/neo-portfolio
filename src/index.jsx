@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './css-src/index.scss';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
@@ -7,11 +7,12 @@ import store from './store';
 
 import Header from './components/Header';
 
-ReactDom.render(
+const root = createRoot(document.getElementById('root'));
+
+root.render(
     <Provider store={store}>
         <HashRouter>
             <Header />
         </HashRouter>
     </Provider>,
-    document.getElementById('root'),
 );
