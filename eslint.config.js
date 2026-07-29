@@ -4,6 +4,7 @@ const globals = require('globals');
 const tsParser = require('@typescript-eslint/parser');
 const tsPlugin = require('@typescript-eslint/eslint-plugin');
 const reactPlugin = require('eslint-plugin-react');
+const reactHooksPlugin = require('eslint-plugin-react-hooks');
 
 // eslint-plugin-react@7.37.5 (latest available; peerDependencies still cap
 // at eslint@^9.7) has several JSX-spacing rules that still call
@@ -46,6 +47,7 @@ module.exports = [
     plugins: {
       react: reactPlugin,
       '@typescript-eslint': tsPlugin,
+      'react-hooks': reactHooksPlugin,
     },
     settings: {
       // eslint-plugin-react@7.37.5 (latest available; peerDependencies still
@@ -53,13 +55,25 @@ module.exports = [
       // is left as the airbnb config's default "detect": ESLint 10 removed the
       // deprecated context.getFilename() that eslint-plugin-react's version
       // detection still calls. Pinning the actual installed React version here
-      // avoids that code path entirely.
+      // avoids that code path entirely. Read dynamically from the installed
+      // package so this never drifts from whatever React version is actually
+      // in node_modules again (was previously hardcoded and had gone stale
+      // after the Task 8 React 19 bump).
       react: {
-        version: '18.3.1',
+        version: require('react/package.json').version,
       },
     },
     rules: {
       'react/jsx-indent': ['error', 4],
+      // eslint-plugin-react-hooks@7.1.1 (latest) ships a much larger
+      // "recommended"/"recommended-latest" config now (it has absorbed the
+      // React Compiler correctness rules: purity, immutability,
+      // set-state-in-render, etc.), which is out of scope for a lint-config
+      // task on an app that predates the Compiler. Only the two classic,
+      // narrowly-scoped hooks rules are enabled here — the ones this plugin
+      // has always been known for.
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
       // eslint-plugin-react@7.37.5 (latest available; peerDependencies still
       // cap at eslint@^9.7) has one rule, jsx-filename-extension, that calls
       // the fully-removed ESLint 10 API context.getFilename() unconditionally
