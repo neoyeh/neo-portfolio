@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useLoader, useFrame } from '@react-three/fiber';
-import { TextureLoader } from 'three/src/loaders/TextureLoader';
+import { TextureLoader } from 'three';
 
 import face from '../../assets/images/creeper_face.png';
 import skin from '../../assets/images/creeper_skin.png';
