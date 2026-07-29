@@ -35,72 +35,72 @@ function Creeper() {
 
   return (
       <group dispose={null}>
-          <mesh castShadow position={[0, 6, 0]} ref={myhead} >
+          <mesh castShadow position={[0, 6, 0]} ref={myhead}>
               <boxGeometry args={[4, 4, 4]} />
               {[...Array(6)].map((x, i) => (
                   <meshStandardMaterial
                     map={(i === 4) ? headMap : skinMap}
-                    roughness= {0.3}
-                    metalness= {0.8}
+                    roughness={0.3}
+                    metalness={0.8}
                     transparent
-                    side= "THREE.DoubleSide"
-                    attachArray= "material"
+                    side="THREE.DoubleSide"
+                    attachArray="material"
                     // Fixed-length (6), never-reordered material array
                     // indexed by cube face; index keys are safe here.
                     // eslint-disable-next-line react/no-array-index-key
-                    key= {i}
+                    key={i}
                   />
               ))}
           </mesh>
           <mesh castShadow position={[0, 0, 0]} ref={mybody}>
-              <boxGeometry args={[4, 8, 2]}/>
+              <boxGeometry args={[4, 8, 2]} />
               <meshStandardMaterial
                 map={skinMap}
-                roughness= {0.3}
-                metalness= {0.8}
+                roughness={0.3}
+                metalness={0.8}
                 transparent
-                side= "THREE.DoubleSide"
+                side="THREE.DoubleSide"
               />
           </mesh>
           <group dispose={null}>
-              <mesh castShadow position={[-1, -5.5, 2]} ref={myfoot1} >
+              <mesh castShadow position={[-1, -5.5, 2]} ref={myfoot1}>
                   <boxGeometry args={[2, 3, 2]} />
                   <meshStandardMaterial
                     map={skinMap}
-                    roughness= {0.3}
-                    metalness= {0.8}
+                    roughness={0.3}
+                    metalness={0.8}
                     transparent
-                    side= "THREE.DoubleSide"
+                    side="THREE.DoubleSide"
                   />
               </mesh>
-              <mesh castShadow position={[-1, -5.5, -2]} ref={myfoot2} >
+              <mesh castShadow position={[-1, -5.5, -2]} ref={myfoot2}>
                   <boxGeometry args={[2, 3, 2]} />
                   <meshStandardMaterial
                     map={skinMap}
-                    roughness= {0.3}
-                    metalness= {0.8}
+                    roughness={0.3}
+                    metalness={0.8}
                     transparent
-                    side= "THREE.DoubleSide"
+                    side="THREE.DoubleSide"
                   />
               </mesh>
-              <mesh castShadow position={[1, -5.5, 2]} ref={myfoot3} >
+              <mesh castShadow position={[1, -5.5, 2]} ref={myfoot3}>
                   <boxGeometry args={[2, 3, 2]} />
                   <meshStandardMaterial
                     map={skinMap}
-                    roughness= {0.3}
-                    metalness= {0.8}
+                    roughness={0.3}
+                    metalness={0.8}
                     transparent
-                    side= "THREE.DoubleSide"
+                    side="THREE.DoubleSide"
                   />
               </mesh>
-              <mesh castShadow position={[1, -5.5, -2]} ref={myfoot4} >
+              <mesh castShadow position={[1, -5.5, -2]} ref={myfoot4}>
                   <boxGeometry args={[2, 3, 2]} />
                   <meshStandardMaterial
                     map={skinMap}
-                    roughness= {0.3}
-                    metalness= {0.8}
+                    roughness={0.3}
+                    metalness={0.8}
                     transparent
-                    side= "THREE.DoubleSide"
+                    side="THREE.DoubleSide"
                   />
               </mesh>
           </group>

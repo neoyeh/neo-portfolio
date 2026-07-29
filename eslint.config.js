@@ -1,8 +1,21 @@
 const { FlatCompat } = require('@eslint/eslintrc');
+const { SourceCode } = require('eslint');
 const globals = require('globals');
 const tsParser = require('@typescript-eslint/parser');
 const tsPlugin = require('@typescript-eslint/eslint-plugin');
 const reactPlugin = require('eslint-plugin-react');
+
+// eslint-plugin-react@7.37.5 (latest available; peerDependencies still cap
+// at eslint@^9.7) has several JSX-spacing rules that still call
+// sourceCode.isSpaceBetweenTokens(), which ESLint 10 renamed (identical
+// signature/behavior) to sourceCode.isSpaceBetween() and dropped the old
+// name for. Unlike context.getFilename() (blocked by the `eslint` package's
+// "exports" map), SourceCode is a public export of the package's main
+// entry point, so the old name can be restored as an alias without reaching
+// into any internals. This is a straight rename shim, not a behavior change.
+if (!SourceCode.prototype.isSpaceBetweenTokens) {
+  SourceCode.prototype.isSpaceBetweenTokens = SourceCode.prototype.isSpaceBetween;
+}
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
@@ -51,21 +64,19 @@ module.exports = [
       // cap at eslint@^9.7) has one rule, jsx-filename-extension, that calls
       // the fully-removed ESLint 10 API context.getFilename() unconditionally
       // in its create(), crashing the entire lint run rather than reporting a
-      // finding. No newer eslint-plugin-react release fixes this yet, so it
-      // is disabled here rather than left to crash the whole run.
+      // finding. Unlike the isSpaceBetweenTokens rename above, ESLint 10
+      // doesn't expose an equivalent replacement on any public API surface
+      // (context.filename is a plain property on a frozen, non-subclassable
+      // object, not something a public export lets you shim), so there's no
+      // workaround available. No newer eslint-plugin-react release fixes
+      // this yet, so it's disabled here rather than left to crash the whole
+      // run. This is a real, if narrow, coverage loss: the rule would flag
+      // 7 real findings in this codebase (About/, CreeperContent/crepper.js,
+      // CreeperContent/index.js, Header/, Portfolio/, ThreeJsWork/,
+      // lazy-image.js all contain JSX in a .js file, not .jsx). Renaming
+      // those 7 files and updating every import is real, valid follow-up
+      // work, deliberately left out of this task's scope.
       'react/jsx-filename-extension': 'off',
-      // Same eslint-plugin-react@7.37.5/ESLint 10 gap as above: these four
-      // airbnb-enabled rules all call the fully-removed SourceCode method
-      // sourceCode.isSpaceBetweenTokens() (renamed isSpaceBetween() in
-      // ESLint 10, but the plugin hasn't been updated to the new name), so
-      // each one crashes the whole run as soon as it hits a JSX element.
-      // Node's package.json "exports" map blocks reaching into ESLint's
-      // internals to shim the old method name back in, so disabling is the
-      // only available workaround until eslint-plugin-react ships a fix.
-      'react/jsx-curly-spacing': 'off',
-      'react/jsx-equals-spacing': 'off',
-      'react/jsx-tag-spacing': 'off',
-      'react/jsx-one-expression-per-line': 'off',
       // eslint-plugin-import@2.32.0 (latest available) has the same gap:
       // import/order's autofix path (fixOutOfOrder) calls the fully-removed
       // sourceCode.getTokenOrCommentBefore()/getTokenOrCommentAfter(), which
