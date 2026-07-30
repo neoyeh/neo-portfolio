@@ -50,7 +50,7 @@ If none of these conditions apply, Step 2 is skipped entirely and the skill proc
 git status --porcelain -- src/images/
 ```
 
-Parse for untracked (`??`) or modified (` M` / `M `) entries.
+Parse every status line for a path under `src/images/` and treat it as a candidate unless its status is a deletion (` D` / `D `) — this covers untracked (`??`), unstaged-modified (` M`), and also **already-staged** files (`A `, `M `, `AM`), since a user may have run `git add` on the new image before invoking the skill. Matching on a fixed shortlist like `??`/` M` alone would silently miss that already-staged case and incorrectly report "no image found."
 
 - **Zero matches** → stop immediately. Tell the user: "沒有偵測到新圖片，請先把圖片放進 src/images/ 再重新執行。" Do not proceed to any later step, do not touch `portfolio.json`, do not commit.
 - **Exactly one match** → this is the source image.
@@ -116,6 +116,7 @@ Read, parse, mutate, and write back the JSON (via a plain read → `JSON.parse` 
 }
 ```
 
+- **Duplicate-entry guard**: before inserting, check whether any existing entry (in any year) already has the same `image` path or the same `project_name` — if so, stop and ask the user to confirm before overwriting/duplicating (protects against accidentally re-running the skill on the same project).
 - If a year group with `"years": "<year>"` already exists in the top-level array, prepend the new entry to that group's `protfolio_list`.
 - If no such group exists, create `{"years": "<year>", "protfolio_list": [<new entry>]}` and insert it into the top-level array at the position that keeps `years` sorted newest-first (numeric descending) — the existing file is already in that order (2025, 2024, 2023, …), so this only matters when the new year is not already the array's first element.
 
@@ -164,6 +165,7 @@ Both the description-menu and the attribute-menu read `dist/portfolio.json` fres
 | Project name contains Chinese | Ask for a romanized name for the slug (Step 2); `project_name` itself is unaffected. |
 | Year not yet present in `portfolio.json` | Create a new year group at the correct sorted position. |
 | A link doesn't obviously match `github` | Treated as a `link_live` entry (desktop icon). |
+| Same `image` path or `project_name` already exists in `portfolio.json` | Stop and ask for confirmation before writing (avoids accidental duplicate/overwrite from a repeat run). |
 
 ## Testing / verification approach
 
