@@ -28,11 +28,18 @@ Before this step, scan `dist/portfolio.json` for historical values (see "Histori
 
 Skip this step entirely if none of the above apply.
 
+**`AskUserQuestion` option-cap rule**: the tool allows at most 4 options per question (plus its built-in "Other"). Real historical data can exceed that for both description and attributes, so never dump the raw distinct-value list straight into the options array — apply this instead:
+
+- **Attributes**: don't build one giant menu of every historical token. Use Step 7's fixed recognition list directly — work-type (`Independent Work` / `Team Work`), layout-style (`Responsive Web Design` / `Adaptive Web Design`), and `Offline` — each sub-group is 2–5 options at most, well under the cap. For tool tags specifically (the open-ended part: `Scrollmagic`, `Bootstrap4`, etc.), show only the 4 most frequently-used historical tags plus "Other" for anything else — never all distinct tags at once.
+- **Description**: if there are more than 4 distinct historical values, do not force them into `AskUserQuestion`'s options. Instead, list them as a numbered plain-text list in a normal message and ask the user to reply with a number (or type new text) — plain conversational back-and-forth, not the `AskUserQuestion` tool. If there are 4 or fewer, it's fine to use `AskUserQuestion` as normal.
+
 ### Historical-value scanning
 
 Read `dist/portfolio.json`, and for every entry's `text` field, split on `</br>` into three segments:
 - Segment 1 (minus any trailing `" | Offline"`) is a description candidate.
 - Every `" | "`-delimited token inside segments 2 and 3 is an attribute candidate.
+
+Not every entry has all 3 segments — some real entries have only 2 (no separate tool-tags/layout-style segment beyond segment 2). Treat a missing segment as an empty string rather than erroring or assuming exactly 3 segments always exist.
 
 De-duplicate before presenting either menu. Do this scan fresh every run — never hardcode or cache the list.
 
@@ -59,6 +66,13 @@ Build the slug from the project name (or the separately-supplied romanized name,
 
 Final base name: `{year}-{slug}` (e.g. `2026-vive-eagle`).
 
+**Duplicate-entry guard (do this before renaming anything):** now that `project_name` and the slug/base name are known, check for a collision on any of these three fronts:
+- An existing entry (across all years) in `dist/portfolio.json` with the same `project_name`.
+- An existing entry in `dist/portfolio.json` whose `image` is the same would-be path, `./img/{year}-{slug}.*`.
+- A file already present in `src/images/` named `{year}-{slug}.{ext}` (any extension) that isn't the source file itself.
+
+If any of these match, STOP and ask the user to confirm before continuing — do not rename, do not compress, do not touch `dist/img/` or `dist/portfolio.json`. This must run before the rename below, since renaming and Step 5's compression are destructive (they can overwrite an existing same-named file) and are hard to catch after the fact.
+
 Rename the source file in `src/images/` to `{year}-{slug}.{original-extension}` (keep the original extension here — compression in Step 5 may change it). If the file is already tracked by git, use `git mv old-name new-name`; if it's untracked, use `mv` then `git add` the new path. Either way, this fully stages the rename — nothing further needed for this file later.
 
 ## Step 5 — Compress via the `image-optimize` skill
@@ -76,6 +90,8 @@ If `optimize` isn't on PATH, try `~/.local/bin/optimize` with the same arguments
 Parse the JSON on stdout:
 - If `errors` is non-empty → STOP. Report the error message to the user. Do not touch `dist/portfolio.json`, do not commit.
 - Otherwise, take `processed[0].output`'s basename as the final image filename — image-optimize's smart routing can change the extension (e.g. an opaque PNG source becomes a `.jpg` output), so this is the authoritative name, not `{year}-{slug}.{original-extension}`.
+- If `processed` is empty, the file may have landed in the `skipped` bucket instead (this happens when a same-format re-encode wouldn't save enough space — `--force` only bypasses the up-to-date check, not this). In that case use `skipped[0].output`'s basename instead; the skipped file is still copied through to the output directory, just without re-encoding. Never fall through to writing `undefined`/blank as the filename.
+- If both `processed` and `skipped` are empty → STOP, this is an error per the rule above.
 
 ## Step 6 — Classify the links
 
@@ -116,12 +132,14 @@ The new entry:
 }
 ```
 
-**Duplicate-entry guard**: before inserting, scan every existing entry (across all years) for the same `image` path or the same `project_name`. If either matches, STOP and ask the user to confirm before continuing (protects against accidentally re-running this skill for the same project).
+(The duplicate-entry guard already ran in Step 4, before the rename/compress — nothing further to check here.)
 
 - If a year group with `"years": "<year>"` already exists in the top-level array, prepend the new entry to that group's `protfolio_list`.
 - If no such group exists, create `{"years": "<year>", "protfolio_list": [<new entry>]}` and insert it into the top-level array at the position that keeps `years` sorted newest-first (the file is already ordered that way — 2025, 2024, 2023, … — insert numerically).
 
 ## Step 9 — Commit, push, and open previews
+
+**Branch check (do this before any git command below):** run `git rev-parse --abbrev-ref HEAD`. `git push origin master` pushes whatever the local `master` ref points at, not necessarily the branch you actually committed to — if the current checkout isn't `master` (e.g. a worktree), the commit lands elsewhere and the push can silently report "Everything up-to-date" without publishing anything, while you'd otherwise tell the user the entry is live. If `HEAD` isn't `master`, STOP: tell the user the current checkout isn't on `master` and this step needs to be run from the main working copy, or ask how they want to proceed. Do not push in that case.
 
 Step 4's rename already staged both sides of the `src/images/` change. Add just the other two touched files:
 
@@ -139,4 +157,10 @@ Then:
 npm run start
 ```
 
-in the background, and tell the user the entry is live-ish at `https://neoyeh.github.io/neo-portfolio/dist/` — mention GitHub Pages can take a minute or two to reflect a just-pushed commit.
+in the background. If `npm` isn't found (non-login shells may not have nvm loaded — the same issue Step 5 documents for `optimize`), try sourcing nvm first and retrying:
+
+```bash
+export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+```
+
+Tell the user the entry is live-ish at `https://neoyeh.github.io/neo-portfolio/dist/` — mention GitHub Pages can take a minute or two to reflect a just-pushed commit.
