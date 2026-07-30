@@ -20,24 +20,23 @@ function PortfolioCard({
     link_live: linkLive,
     link_github: linkGithub,
   } = item;
-  const gitlinkbuild = (data) => {
-    if (data) {
-      if (Array.isArray(data) && data.length > 0) {
-        return (
-          data.map((link) => (
-              <a href={link} key={link} className="font-card-icon font-card-icon--github" target="_blank" rel="nofollow noopener noreferrer" aria-label="GitHub repository">
-                  <i className="fab fa-github" aria-hidden="true" />
-              </a>
-          ))
-        );
-      }
-      return (
-          <a href={data} className="font-card-icon font-card-icon--github" target="_blank" rel="nofollow noopener noreferrer" aria-label="GitHub repository">
-              <i className="fab fa-github" aria-hidden="true" />
-          </a>
-      );
+  const buildLinkIcons = (data, modifierClass, iconClassName, ariaLabel) => {
+    if (!data) {
+      return '';
     }
-    return '';
+    const links = Array.isArray(data) ? data : [data];
+    return links.map((link) => (
+        <a
+          href={link}
+          key={link}
+          className={`font-card-icon font-card-icon--${modifierClass}`}
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+          aria-label={ariaLabel}
+        >
+            <i className={iconClassName} aria-hidden="true" />
+        </a>
+    ));
   };
   return (
       <div className="protfolio-card">
@@ -64,13 +63,8 @@ function PortfolioCard({
                       {(linkLive || linkGithub)
                         ? (
                             <div className="link-block">
-                                {(linkLive)
-                                  ? (
-                                      <a href={linkLive} className="font-card-icon font-card-icon--live" target="_blank" rel="nofollow noopener noreferrer" aria-label="Live preview">
-                                          <i className="fas fa-desktop" aria-hidden="true" />
-                                      </a>
-                                  ) : ''}
-                                {gitlinkbuild(linkGithub)}
+                                {buildLinkIcons(linkLive, 'live', 'fas fa-desktop', 'Live preview')}
+                                {buildLinkIcons(linkGithub, 'github', 'fab fa-github', 'GitHub repository')}
                             </div>
                         )
                         : ''}
@@ -93,7 +87,10 @@ PortfolioCard.propTypes = {
     project_name: PropTypes.string,
     image: PropTypes.string,
     text: PropTypes.string,
-    link_live: PropTypes.string,
+    link_live: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.array,
+    ]),
     link_github: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.array,
@@ -128,3 +125,4 @@ function Portfolio() {
 }
 
 export default Portfolio;
+export { PortfolioCard };
