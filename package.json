@@ -10,8 +10,7 @@
     "build-css": "sass src/css-src:dist/css",
     "start": "webpack-dev-server",
     "test": "jest",
-    "test-cov": "jest --coverage",
-    "png-to-jpg": "node webpack.config.png-to-jpg.mjs"
+    "test-cov": "jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -54,9 +53,6 @@
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
     "core-js": "^3.49.0",
-    "imagemin": "^9.0.1",
-    "imagemin-mozjpeg": "^10.0.0",
-    "imagemin-pngquant": "^10.0.0",
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",
     "react": "^19.2.8",
