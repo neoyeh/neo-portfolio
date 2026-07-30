@@ -33,6 +33,7 @@ function PortfolioCard({
           target="_blank"
           rel="nofollow noopener noreferrer"
           aria-label={ariaLabel}
+          title={ariaLabel}
         >
             <i className={iconClassName} aria-hidden="true" />
         </a>
@@ -63,8 +64,8 @@ function PortfolioCard({
                       {(linkLive || linkGithub)
                         ? (
                             <div className="link-block">
-                                {buildLinkIcons(linkLive, 'live', 'fas fa-desktop', 'Live preview')}
-                                {buildLinkIcons(linkGithub, 'github', 'fab fa-github', 'GitHub repository')}
+                                {buildLinkIcons(linkLive, 'live', 'fas fa-desktop', '查看正式網站')}
+                                {buildLinkIcons(linkGithub, 'github', 'fab fa-github', '查看 Prototype')}
                             </div>
                         )
                         : ''}

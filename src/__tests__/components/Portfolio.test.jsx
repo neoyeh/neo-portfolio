@@ -19,12 +19,14 @@ describe('PortfolioCard link rendering', () => {
         }}
         />,
     );
-    const liveLinks = screen.getAllByLabelText('Live preview');
-    const githubLinks = screen.getAllByLabelText('GitHub repository');
+    const liveLinks = screen.getAllByLabelText('查看正式網站');
+    const githubLinks = screen.getAllByLabelText('查看 Prototype');
     expect(liveLinks).toHaveLength(1);
     expect(liveLinks[0]).toHaveAttribute('href', 'https://example.com/live');
+    expect(liveLinks[0]).toHaveAttribute('title', '查看正式網站');
     expect(githubLinks).toHaveLength(1);
     expect(githubLinks[0]).toHaveAttribute('href', 'https://github.com/example/repo');
+    expect(githubLinks[0]).toHaveAttribute('title', '查看 Prototype');
   });
 
   test('renders multiple desktop icons when link_live is an array', () => {
@@ -38,7 +40,7 @@ describe('PortfolioCard link rendering', () => {
         }}
         />,
     );
-    const liveLinks = screen.getAllByLabelText('Live preview');
+    const liveLinks = screen.getAllByLabelText('查看正式網站');
     expect(liveLinks).toHaveLength(2);
     expect(liveLinks.map((a) => a.getAttribute('href'))).toEqual([
       'https://example.com/a',

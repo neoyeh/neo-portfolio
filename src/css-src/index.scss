@@ -358,7 +358,8 @@ body{
                   margin-right: 12px;
                   color: #9e9e9e;
                   transition: color 0.25s;
-                  &:hover{
+                  &:hover,
+                  &:focus-visible{
                     color: #fff;
                   }
                   &.font-card-icon--live{
