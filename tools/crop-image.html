@@ -71,6 +71,9 @@
     border: 1px solid #ccc;
     margin-top: 8px;
   }
+  [hidden] {
+    display: none !important;
+  }
 </style>
 </head>
 <body>
@@ -100,7 +103,123 @@
   </div>
 
   <script>
-    // Interaction logic added in later tasks.
+    (function () {
+      var dropZone = document.getElementById('crop-frame');
+      var fileInput = document.getElementById('file-input');
+      var chooseFileBtn = document.getElementById('choose-file-btn');
+      var placeholder = document.getElementById('placeholder');
+      var previewImage = document.getElementById('preview-image');
+      var zoomSlider = document.getElementById('zoom-slider');
+      var downloadBtn = document.getElementById('download-btn');
+      var errorMessage = document.getElementById('error-message');
+
+      var MAX_ZOOM_MULTIPLIER = 4;
+
+      var state = {
+        naturalWidth: 0,
+        naturalHeight: 0,
+        scale: 1,
+        minScale: 1,
+        maxScale: 1,
+        translateX: 0,
+        translateY: 0,
+      };
+
+      function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.hidden = false;
+      }
+
+      function clearError() {
+        errorMessage.hidden = true;
+        errorMessage.textContent = '';
+      }
+
+      function getFrameSize() {
+        var rect = dropZone.getBoundingClientRect();
+        return { width: rect.width, height: rect.height };
+      }
+
+      function render() {
+        var frame = getFrameSize();
+        var drawWidth = state.naturalWidth * state.scale;
+        var drawHeight = state.naturalHeight * state.scale;
+        var borderWidth = parseFloat(window.getComputedStyle(dropZone).borderLeftWidth) || 0;
+        previewImage.style.width = drawWidth + 'px';
+        previewImage.style.height = drawHeight + 'px';
+        previewImage.style.left = (frame.width / 2 - drawWidth / 2 + state.translateX - borderWidth) + 'px';
+        previewImage.style.top = (frame.height / 2 - drawHeight / 2 + state.translateY - borderWidth) + 'px';
+      }
+
+      function loadFile(file) {
+        clearError();
+        if (!file || file.type.indexOf('image/') !== 0) {
+          showError('請選擇圖片檔案(jpg、png 等)。');
+          return;
+        }
+        var objectUrl = URL.createObjectURL(file);
+        var img = new Image();
+        img.onload = function () {
+          state.naturalWidth = img.naturalWidth;
+          state.naturalHeight = img.naturalHeight;
+          previewImage.src = objectUrl;
+          placeholder.hidden = true;
+          previewImage.hidden = false;
+
+          var frame = getFrameSize();
+          state.minScale = Math.max(frame.width / state.naturalWidth, frame.height / state.naturalHeight);
+          state.maxScale = state.minScale * MAX_ZOOM_MULTIPLIER;
+          state.scale = state.minScale;
+          state.translateX = 0;
+          state.translateY = 0;
+
+          zoomSlider.setAttribute('min', String(state.minScale));
+          zoomSlider.setAttribute('max', String(state.maxScale));
+          zoomSlider.setAttribute('step', String((state.maxScale - state.minScale) / 200 || 0.001));
+          zoomSlider.setAttribute('value', String(state.scale));
+          zoomSlider.disabled = false;
+          downloadBtn.disabled = false;
+
+          render();
+        };
+        img.onerror = function () {
+          showError('圖片載入失敗,請換一張試試。');
+          URL.revokeObjectURL(objectUrl);
+        };
+        img.src = objectUrl;
+      }
+
+      chooseFileBtn.addEventListener('click', function () {
+        fileInput.click();
+      });
+
+      fileInput.addEventListener('change', function () {
+        if (fileInput.files && fileInput.files[0]) {
+          loadFile(fileInput.files[0]);
+        }
+      });
+
+      ['dragenter', 'dragover'].forEach(function (eventName) {
+        dropZone.addEventListener(eventName, function (e) {
+          e.preventDefault();
+          dropZone.classList.add('drag-over');
+        });
+      });
+
+      ['dragleave', 'drop'].forEach(function (eventName) {
+        dropZone.addEventListener(eventName, function (e) {
+          e.preventDefault();
+          dropZone.classList.remove('drag-over');
+        });
+      });
+
+      dropZone.addEventListener('drop', function (e) {
+        var file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+        if (file) {
+          loadFile(file);
+        }
+      });
+    })();
   </script>
 </body>
 </html>
