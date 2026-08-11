@@ -176,7 +176,7 @@
           zoomSlider.setAttribute('min', String(state.minScale));
           zoomSlider.setAttribute('max', String(state.maxScale));
           zoomSlider.setAttribute('step', String((state.maxScale - state.minScale) / 200 || 0.001));
-          zoomSlider.setAttribute('value', String(state.scale));
+          zoomSlider.value = state.scale;
           zoomSlider.disabled = false;
           downloadBtn.disabled = false;
 
