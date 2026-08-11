@@ -296,6 +296,19 @@
       dropZone.addEventListener('pointercancel', endDrag);
       dropZone.addEventListener('pointerleave', endDrag);
 
+      window.addEventListener('resize', function () {
+        if (!state.naturalWidth) return;
+        var frame = getFrameSize();
+        state.minScale = Math.max(frame.width / state.naturalWidth, frame.height / state.naturalHeight);
+        state.maxScale = state.minScale * MAX_ZOOM_MULTIPLIER;
+
+        zoomSlider.min = String(state.minScale);
+        zoomSlider.max = String(state.maxScale);
+        zoomSlider.step = String((state.maxScale - state.minScale) / 200 || 0.001);
+
+        setScale(state.scale);
+      });
+
       downloadBtn.addEventListener('click', function () {
         if (!state.naturalWidth) return;
 
