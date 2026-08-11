@@ -123,6 +123,11 @@
         maxScale: 1,
         translateX: 0,
         translateY: 0,
+        dragging: false,
+        dragStartX: 0,
+        dragStartY: 0,
+        dragOriginX: 0,
+        dragOriginY: 0,
       };
 
       function showError(message) {
@@ -151,6 +156,39 @@
         previewImage.style.top = (frame.height / 2 - drawHeight / 2 + state.translateY - borderWidth) + 'px';
       }
 
+      function clampScale(scale) {
+        return Math.min(state.maxScale, Math.max(state.minScale, scale));
+      }
+
+      function clampTranslate(tx, ty, scale, frame) {
+        var drawWidth = state.naturalWidth * scale;
+        var drawHeight = state.naturalHeight * scale;
+        var maxOffsetX = Math.max(0, (drawWidth - frame.width) / 2);
+        var maxOffsetY = Math.max(0, (drawHeight - frame.height) / 2);
+        return {
+          x: Math.min(maxOffsetX, Math.max(-maxOffsetX, tx)),
+          y: Math.min(maxOffsetY, Math.max(-maxOffsetY, ty)),
+        };
+      }
+
+      function setScale(newScale) {
+        var frame = getFrameSize();
+        state.scale = clampScale(newScale);
+        var clamped = clampTranslate(state.translateX, state.translateY, state.scale, frame);
+        state.translateX = clamped.x;
+        state.translateY = clamped.y;
+        zoomSlider.value = String(state.scale);
+        render();
+      }
+
+      function setTranslate(newX, newY) {
+        var frame = getFrameSize();
+        var clamped = clampTranslate(newX, newY, state.scale, frame);
+        state.translateX = clamped.x;
+        state.translateY = clamped.y;
+        render();
+      }
+
       function loadFile(file) {
         clearError();
         if (!file || file.type.indexOf('image/') !== 0) {
@@ -173,10 +211,10 @@
           state.translateX = 0;
           state.translateY = 0;
 
-          zoomSlider.setAttribute('min', String(state.minScale));
-          zoomSlider.setAttribute('max', String(state.maxScale));
-          zoomSlider.setAttribute('step', String((state.maxScale - state.minScale) / 200 || 0.001));
-          zoomSlider.value = state.scale;
+          zoomSlider.min = String(state.minScale);
+          zoomSlider.max = String(state.maxScale);
+          zoomSlider.step = String((state.maxScale - state.minScale) / 200 || 0.001);
+          zoomSlider.value = String(state.scale);
           zoomSlider.disabled = false;
           downloadBtn.disabled = false;
 
@@ -219,6 +257,42 @@
           loadFile(file);
         }
       });
+
+      zoomSlider.addEventListener('input', function () {
+        if (!state.naturalWidth) return;
+        setScale(parseFloat(zoomSlider.value));
+      });
+
+      dropZone.addEventListener('wheel', function (e) {
+        if (!state.naturalWidth) return;
+        e.preventDefault();
+        var zoomFactor = Math.exp(-e.deltaY * 0.001);
+        setScale(state.scale * zoomFactor);
+      }, { passive: false });
+
+      dropZone.addEventListener('pointerdown', function (e) {
+        if (!state.naturalWidth) return;
+        state.dragging = true;
+        state.dragStartX = e.clientX;
+        state.dragStartY = e.clientY;
+        state.dragOriginX = state.translateX;
+        state.dragOriginY = state.translateY;
+        dropZone.setPointerCapture(e.pointerId);
+      });
+
+      dropZone.addEventListener('pointermove', function (e) {
+        if (!state.dragging) return;
+        var dx = e.clientX - state.dragStartX;
+        var dy = e.clientY - state.dragStartY;
+        setTranslate(state.dragOriginX + dx, state.dragOriginY + dy);
+      });
+
+      function endDrag() {
+        state.dragging = false;
+      }
+      dropZone.addEventListener('pointerup', endDrag);
+      dropZone.addEventListener('pointercancel', endDrag);
+      dropZone.addEventListener('pointerleave', endDrag);
     })();
   </script>
 </body>
