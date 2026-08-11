@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>圖片裁切工具</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    max-width: 760px;
+    margin: 40px auto;
+    padding: 0 20px;
+    color: #222;
+  }
+  h1 { font-size: 20px; }
+  .crop-frame {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    aspect-ratio: 1400 / 690;
+    margin: 16px 0;
+    overflow: hidden;
+    border: 2px dashed #999;
+    background: #f4f4f4;
+    cursor: grab;
+    touch-action: none;
+  }
+  .crop-frame.drag-over {
+    border-color: #0a7;
+    background: #eafaf3;
+  }
+  .crop-frame:active {
+    cursor: grabbing;
+  }
+  .placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #777;
+    padding: 20px;
+    pointer-events: none;
+  }
+  .preview-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .controls input[type="range"] {
+    flex: 1;
+  }
+  .error-message {
+    color: #c00;
+    font-weight: 600;
+  }
+  #result-section img {
+    max-width: 350px;
+    width: 100%;
+    border: 1px solid #ccc;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+  <h1>圖片裁切工具(1400×690)</h1>
+  <p>選擇或拖曳一張圖片,縮放、拖曳調整位置,裁切成 1400×690 的 JPG。</p>
+
+  <input type="file" id="file-input" accept="image/*" hidden />
+  <button id="choose-file-btn" type="button">選擇圖片</button>
+
+  <p id="error-message" class="error-message" hidden></p>
+
+  <div id="crop-frame" class="crop-frame">
+    <div id="placeholder" class="placeholder">拖曳圖片到這裡,或點擊上方「選擇圖片」</div>
+    <img id="preview-image" class="preview-image" alt="" hidden />
+  </div>
+
+  <div class="controls">
+    <label for="zoom-slider">縮放</label>
+    <input type="range" id="zoom-slider" min="1" max="1" step="0.01" value="1" disabled />
+  </div>
+
+  <button id="download-btn" type="button" disabled>下載裁切結果</button>
+
+  <div id="result-section" hidden>
+    <p>若沒有自動開始下載,請右鍵下方圖片另存新檔:</p>
+    <img id="result-preview" alt="裁切結果預覽" />
+  </div>
+
+  <script>
+    // Interaction logic added in later tasks.
+  </script>
+</body>
+</html>
