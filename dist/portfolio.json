@@ -1,6 +1,6 @@
 [
   {
-    "years": "2025",
+    "years": "2026",
     "protfolio_list": [
       {
         "hidden": true,
@@ -10,11 +10,18 @@
         "link_github": "https://neoyeh.github.io/neo-portfolio/dist"
       },
       {
-        "project_name": "VIVE Eagle",
-        "image": "./img/2025-vive-eagle.jpg",
+        "project_name": "VIVEE",
+        "image": "./img/2026-vivee.jpg",
         "text": "品牌產品頁面切版</br>Independent Work | Responsive Web Design",
-        "link_live": "https://www.vive.com/tw/product/vive-eagle/overview/",
-        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/vive-eagle/default-tw-prototype.html"
+        "link_live": "https://www.hivivee.com/jp/",
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/pdp-vivee/prototype/jp-prototype.html"
+      },
+      {
+        "project_name": "VIVE Eagle",
+        "image": "./img/2026-vive-eagle.jpg",
+        "text": "品牌產品頁面切版</br>Independent Work | Responsive Web Design",
+        "link_live": "https://www.vive.com/us/product/vive-eagle/overview/",
+        "link_github": "https://neoyeh.github.io/neo_yeh_prototype/wip/vive/vive-eagle/prototype/default-revamp26-prototype.html"
       }
     ]
   },
